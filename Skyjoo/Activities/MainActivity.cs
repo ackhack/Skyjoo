@@ -29,11 +29,18 @@ namespace Skyjoo
             var nameBox = FindViewById<EditText>(Resource.Id.textName);
             nameBox.Text = getName().Result;
 
-            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+            try
             {
-                socket.Connect("8.8.8.8", 65530);
-                IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
-                DependencyClass.LocalIp = endPoint.Address.ToString();
+                using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
+                {
+                    socket.Connect("8.8.8.8", 65530);
+                    IPEndPoint endPoint = socket.LocalEndPoint as IPEndPoint;
+                    DependencyClass.LocalIp = endPoint.Address.ToString();
+                }
+            }
+            catch (Exception)
+            {
+                DependencyClass.LocalIp = "127.0.0.1";
             }
 
             btnServer.Click += (sender, e) =>
