@@ -1,0 +1,156 @@
+﻿using System;
+
+namespace Skyjoo.GameLogic
+{
+    public class SkyjoCard
+    {
+        public SkyjoCard(SkyjoCardNumber number, bool isVisible)
+        {
+            Number = number;
+            IsVisible = isVisible;
+        }
+
+        public SkyjoCardNumber Number;
+        public bool IsVisible;
+        public bool IsPlaceholder { get { return Number == SkyjoCardNumber.Placeholder; } }
+
+        public static int GetPlaceholderImageId()
+        {
+            return Resource.Drawable.IconPlaceholder;
+        }
+
+        public int GetImageId()
+        {
+            if (!IsVisible) return Resource.Drawable.IconBack;
+            switch (Number)
+            {
+                case SkyjoCardNumber.Minus2:
+                    return Resource.Drawable.IconM2;
+                case SkyjoCardNumber.Minus1:
+                    return Resource.Drawable.IconM1;
+                case SkyjoCardNumber.Zero:
+                    return Resource.Drawable.Icon0;
+                case SkyjoCardNumber.Plus1:
+                    return Resource.Drawable.Icon1;
+                case SkyjoCardNumber.Plus2:
+                    return Resource.Drawable.Icon2;
+                case SkyjoCardNumber.Plus3:
+                    return Resource.Drawable.Icon3;
+                case SkyjoCardNumber.Plus4:
+                    return Resource.Drawable.Icon4;
+                case SkyjoCardNumber.Plus5:
+                    return Resource.Drawable.Icon5;
+                case SkyjoCardNumber.Plus6:
+                    return Resource.Drawable.Icon6;
+                case SkyjoCardNumber.Plus7:
+                    return Resource.Drawable.Icon7;
+                case SkyjoCardNumber.Plus8:
+                    return Resource.Drawable.Icon8;
+                case SkyjoCardNumber.Plus9:
+                    return Resource.Drawable.Icon9;
+                case SkyjoCardNumber.Plus10:
+                    return Resource.Drawable.Icon10;
+                case SkyjoCardNumber.Plus11:
+                    return Resource.Drawable.Icon11;
+                case SkyjoCardNumber.Plus12:
+                    return Resource.Drawable.Icon12;
+                case SkyjoCardNumber.Placeholder:
+                    return Resource.Drawable.IconPlaceholder;
+            }
+            return Resource.Drawable.IconPlaceholder;
+        }
+
+        public int GetValue()
+        {
+            switch (Number)
+            {
+                case SkyjoCardNumber.Minus2:
+                    return -2;
+                case SkyjoCardNumber.Minus1:
+                    return -1;
+                case SkyjoCardNumber.Zero:
+                    return 0;
+                case SkyjoCardNumber.Plus1:
+                    return 1;
+                case SkyjoCardNumber.Plus2:
+                    return 2;
+                case SkyjoCardNumber.Plus3:
+                    return 3;
+                case SkyjoCardNumber.Plus4:
+                    return 4;
+                case SkyjoCardNumber.Plus5:
+                    return 5;
+                case SkyjoCardNumber.Plus6:
+                    return 6;
+                case SkyjoCardNumber.Plus7:
+                    return 7;
+                case SkyjoCardNumber.Plus8:
+                    return 8;
+                case SkyjoCardNumber.Plus9:
+                    return 9;
+                case SkyjoCardNumber.Plus10:
+                    return 10;
+                case SkyjoCardNumber.Plus11:
+                    return 11;
+                case SkyjoCardNumber.Plus12:
+                    return 12;
+                case SkyjoCardNumber.Placeholder:
+                default:
+                    return 0;
+            }
+        }
+
+        public static SkyjoCard[] GetAllCards()
+        {
+
+            SkyjoCard[] cards = new SkyjoCard[150];
+
+            int fill = 0;
+            foreach (SkyjoCardNumber number in Enum.GetValues(typeof(SkyjoCardNumber)))
+            {
+                if (number == SkyjoCardNumber.Placeholder) continue;
+
+                for (int j = 0; j < SkyjoCard.GetInitAmountOfCard(number); j++)
+                {
+                    cards[fill] = new SkyjoCard(number, false);
+                    fill++;
+                }
+            }
+
+            return cards;
+        }
+
+        static private int GetInitAmountOfCard(SkyjoCardNumber number)
+        {
+            switch (number)
+            {
+                case SkyjoCardNumber.Minus2:
+                    return 5;
+                case SkyjoCardNumber.Zero:
+                    return 15;
+                default:
+                    return 10;
+            }
+        }
+    }
+
+    public enum SkyjoCardNumber
+    {
+        Placeholder,
+        Minus2,
+        Minus1,
+        Zero,
+        Plus1,
+        Plus2,
+        Plus3,
+        Plus4,
+        Plus5,
+        Plus6,
+        Plus7,
+        Plus8,
+        Plus9,
+        Plus10,
+        Plus11,
+        Plus12
+    }
+}

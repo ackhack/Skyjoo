@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skyjoo", "Skyjoo\Skyjoo.csproj", "{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NetworkCommunication.Core", "NetworkCommunication.Core\NetworkCommunication.Core.shproj", "{14115913-DADC-4BB2-A630-AA5F8440F261}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AE38E86-0FCB-4A91-BF7E-3B92F8E6F2E2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8EBC1198-D3DE-4E6F-8F00-291B51CD35A4}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		NetworkCommunication.Core\NetworkCommunication.Core.projitems*{14115913-dadc-4bb2-a630-aa5f8440f261}*SharedItemsImports = 13
+		NetworkCommunication.Core\NetworkCommunication.Core.projitems*{4ae38e86-0fcb-4a91-bf7e-3b92f8e6f2e2}*SharedItemsImports = 4
+	EndGlobalSection
+EndGlobal

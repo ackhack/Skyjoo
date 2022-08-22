@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Skyjoo</string>
+    <string name="connection_status">Connection Status:</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="type_ip">Type IP</string>
+    <string name="default_ip">IP</string>
+    <string name="type_port">Type Port</string>
+    <string name="default_port">6000</string>
+    <string name="connect">Connect</string>
+    <string name="type_message">Type Message</string>
+    <string name="server_button">Host Server</string>
+    <string name="client_button">Join Server</string>
+    <string name="server_status">Server Status:</string>
+    <string name="stopped">Stopped</string>
+    <string name="start">Start Server</string>
+	<string name="start_game">Start Game</string>
+	<string name="player_placeholder">Player</string>
+	<string name="current_card">Current Card</string>
+	<string name="fieldcard">Card</string>
+	<string name="name_input">Enter your name</string>
+	<string name="winner_header">Skyjoo Results</string>
+	<string name="game_reveal_on_field">revealed a card</string>
+	<string name="game_current_to_field">moved their card to the field</string>
+	<string name="game_stack_to_current">picked a card from the stack</string>
+	<string name="game_reversestack_to_current">picked a card from the reversed stack</string>
+	<string name="game_current_to_reversestack">moved their card to the reverse stack</string>
+	<string name="game_your_turn">Your Turn</string>
+	<string name="game_last_round_start">Last Round started</string>
+	<string name="login_message">"{0} Connected"</string>
+	<string name="logout_message">"{0} Disconnected"</string>
+	<string name="game_end">"Game has ended"</string>
+	<string name="game_restart_button">"New Game"</string>
+	<string name="game_start">"Game starts"</string>
+</resources>
