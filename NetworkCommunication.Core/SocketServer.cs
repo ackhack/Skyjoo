@@ -206,10 +206,7 @@ namespace NetworkCommunication.Core
                         {
                             try
                             {
-                                System.Diagnostics.Debug.WriteLine("Sending to " + host.Address);
-                                System.Diagnostics.Debug.WriteLine("Sending " + message.Length);
-                                System.Diagnostics.Debug.WriteLine("Sent " + host.Connection.Send(message));
-                                ;
+                                host.Connection.Send(message);
                             }
                             catch (Exception ex)
                             {
