@@ -85,7 +85,12 @@ namespace Skyjoo.GameLogic
             gameStarted = false;
             lastMove = FieldUpdateType.RevealOnField;
             lastRoundStarter = -10;
-            roundStarter++;
+            do
+            {
+                roundStarter++;
+                if (roundStarter == Players.Length) roundStarter = 0;
+            }
+            while (!Players[roundStarter].Active);
             CurrentActivePlayerIndex = roundStarter;
             SkyjoCardStack = SkyjoCardStack.GetCardStack(stackSeed);
             ReverseSkyjoCardStack.Clear();
