@@ -67,7 +67,10 @@ namespace Skyjoo
             switch (hostMessage.Type)
             {
                 case SkyjoHostMessageType.GameStart:
-                    SetContentView(Resource.Layout.game_layout);
+                    RunOnUiThread(() =>
+                    {
+                        SetContentView(Resource.Layout.game_layout);
+                    });
                     var gameStartMessage = content.ToObject<SkyjoHostGameStartMessage>();
                     startGameAsClient(gameStartMessage.Info);
                     break;
