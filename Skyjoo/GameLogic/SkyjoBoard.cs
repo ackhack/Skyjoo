@@ -15,6 +15,7 @@ namespace Skyjoo.GameLogic
         public ReverseSkyjoCardStack ReverseSkyjoCardStack;
         public int CurrentActivePlayerIndex;
 
+        private int roundStarter;
         private bool ignoreRules;
         private FieldUpdateType lastMove;
         private bool gameEnded;
@@ -45,6 +46,7 @@ namespace Skyjoo.GameLogic
             lastRoundStarter = -10;
             CurrentActivePlayerIndex = 0;
             CurrentDisplayedPlayerIndex = -1;
+            roundStarter = 0;
             ReverseSkyjoCardStack = new ReverseSkyjoCardStack();
             SkyjoCardStack = SkyjoCardStack.GetCardStack(stackSeed);
             createPlayers(players);
@@ -82,7 +84,8 @@ namespace Skyjoo.GameLogic
             gameStarted = false;
             lastMove = FieldUpdateType.RevealOnField;
             lastRoundStarter = -10;
-            CurrentActivePlayerIndex = 0;
+            roundStarter++;
+            CurrentActivePlayerIndex = roundStarter;
             SkyjoCardStack = SkyjoCardStack.GetCardStack(stackSeed);
             ReverseSkyjoCardStack.Clear();
             foreach (SkyjoPlayer player in Players)
