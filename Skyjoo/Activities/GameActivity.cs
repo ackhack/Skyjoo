@@ -19,7 +19,7 @@ namespace Skyjoo
         {
             base.OnCreate(bundle);
 
-            SetContentView(Resource.Layout.game_layout);
+            SetContentView(Resource.Layout.waiting_layout);
             DependencyClass.Client.HostMessageRecieved += Client_HostMessageRecieved;
             if (DependencyClass.Server != null)
             {
@@ -67,6 +67,7 @@ namespace Skyjoo
             switch (hostMessage.Type)
             {
                 case SkyjoHostMessageType.GameStart:
+                    SetContentView(Resource.Layout.game_layout);
                     var gameStartMessage = content.ToObject<SkyjoHostGameStartMessage>();
                     startGameAsClient(gameStartMessage.Info);
                     break;

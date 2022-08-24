@@ -4527,7 +4527,10 @@ namespace Skyjoo
 			public const int support_simple_spinner_dropdown_item = 2131427394;
 			
 			// aapt resource value: 0x7F0B0043
-			public const int winnerListItem = 2131427395;
+			public const int waiting_layout = 2131427395;
+			
+			// aapt resource value: 0x7F0B0044
+			public const int winnerListItem = 2131427396;
 			
 			static Layout()
 			{
@@ -4809,7 +4812,10 @@ namespace Skyjoo
 			public const int type_port = 2131624012;
 			
 			// aapt resource value: 0x7F0E004D
-			public const int winner_header = 2131624013;
+			public const int waiting_for_host = 2131624013;
+			
+			// aapt resource value: 0x7F0E004E
+			public const int winner_header = 2131624014;
 			
 			static String()
 			{

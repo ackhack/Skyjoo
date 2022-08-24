@@ -31,4 +31,5 @@
 	<string name="game_end">"Game has ended"</string>
 	<string name="game_restart_button">"New Game"</string>
 	<string name="game_start">"Game starts"</string>
+	<string name="waiting_for_host">"Waiting for host to start the game"</string>
 </resources>
