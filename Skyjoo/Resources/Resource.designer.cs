@@ -4098,115 +4098,118 @@ namespace Skyjoo
 			public const int textChangelog = 2131230937;
 			
 			// aapt resource value: 0x7F0800DA
-			public const int textHostIp = 2131230938;
-			
-			// aapt resource value: 0x7F0800E0
-			public const int textinput_counter = 2131230944;
-			
-			// aapt resource value: 0x7F0800E1
-			public const int textinput_error = 2131230945;
-			
-			// aapt resource value: 0x7F0800E2
-			public const int textinput_helper_text = 2131230946;
+			public const int textCurrentPlayer = 2131230938;
 			
 			// aapt resource value: 0x7F0800DB
-			public const int textName = 2131230939;
+			public const int textHostIp = 2131230939;
 			
-			// aapt resource value: 0x7F0800DC
-			public const int textSpacerNoButtons = 2131230940;
+			// aapt resource value: 0x7F0800E1
+			public const int textinput_counter = 2131230945;
 			
-			// aapt resource value: 0x7F0800DD
-			public const int textSpacerNoTitle = 2131230941;
-			
-			// aapt resource value: 0x7F0800DE
-			public const int textStart = 2131230942;
-			
-			// aapt resource value: 0x7F0800DF
-			public const int text_input_password_toggle = 2131230943;
+			// aapt resource value: 0x7F0800E2
+			public const int textinput_error = 2131230946;
 			
 			// aapt resource value: 0x7F0800E3
-			public const int time = 2131230947;
+			public const int textinput_helper_text = 2131230947;
+			
+			// aapt resource value: 0x7F0800DC
+			public const int textName = 2131230940;
+			
+			// aapt resource value: 0x7F0800DD
+			public const int textSpacerNoButtons = 2131230941;
+			
+			// aapt resource value: 0x7F0800DE
+			public const int textSpacerNoTitle = 2131230942;
+			
+			// aapt resource value: 0x7F0800DF
+			public const int textStart = 2131230943;
+			
+			// aapt resource value: 0x7F0800E0
+			public const int text_input_password_toggle = 2131230944;
 			
 			// aapt resource value: 0x7F0800E4
-			public const int title = 2131230948;
+			public const int time = 2131230948;
 			
 			// aapt resource value: 0x7F0800E5
-			public const int titleDividerNoCustom = 2131230949;
+			public const int title = 2131230949;
 			
 			// aapt resource value: 0x7F0800E6
-			public const int title_template = 2131230950;
+			public const int titleDividerNoCustom = 2131230950;
 			
 			// aapt resource value: 0x7F0800E7
-			public const int top = 2131230951;
+			public const int title_template = 2131230951;
 			
 			// aapt resource value: 0x7F0800E8
-			public const int topPanel = 2131230952;
+			public const int top = 2131230952;
 			
 			// aapt resource value: 0x7F0800E9
-			public const int touch_outside = 2131230953;
+			public const int topPanel = 2131230953;
 			
 			// aapt resource value: 0x7F0800EA
-			public const int transition_current_scene = 2131230954;
+			public const int touch_outside = 2131230954;
 			
 			// aapt resource value: 0x7F0800EB
-			public const int transition_layout_save = 2131230955;
+			public const int transition_current_scene = 2131230955;
 			
 			// aapt resource value: 0x7F0800EC
-			public const int transition_position = 2131230956;
+			public const int transition_layout_save = 2131230956;
 			
 			// aapt resource value: 0x7F0800ED
-			public const int transition_scene_layoutid_cache = 2131230957;
+			public const int transition_position = 2131230957;
 			
 			// aapt resource value: 0x7F0800EE
-			public const int transition_transform = 2131230958;
+			public const int transition_scene_layoutid_cache = 2131230958;
 			
 			// aapt resource value: 0x7F0800EF
-			public const int txtIPAddress = 2131230959;
+			public const int transition_transform = 2131230959;
 			
 			// aapt resource value: 0x7F0800F0
-			public const int txtMessages = 2131230960;
+			public const int txtIPAddress = 2131230960;
 			
 			// aapt resource value: 0x7F0800F1
-			public const int txtPort = 2131230961;
+			public const int txtMessages = 2131230961;
 			
 			// aapt resource value: 0x7F0800F2
-			public const int @unchecked = 2131230962;
+			public const int txtPort = 2131230962;
 			
 			// aapt resource value: 0x7F0800F3
-			public const int uniform = 2131230963;
+			public const int @unchecked = 2131230963;
 			
 			// aapt resource value: 0x7F0800F4
-			public const int unlabeled = 2131230964;
+			public const int uniform = 2131230964;
 			
 			// aapt resource value: 0x7F0800F5
-			public const int up = 2131230965;
+			public const int unlabeled = 2131230965;
 			
 			// aapt resource value: 0x7F0800F6
-			public const int useLogo = 2131230966;
+			public const int up = 2131230966;
 			
 			// aapt resource value: 0x7F0800F7
-			public const int view_cards = 2131230967;
+			public const int useLogo = 2131230967;
 			
 			// aapt resource value: 0x7F0800F8
-			public const int view_offset_helper = 2131230968;
+			public const int view_cards = 2131230968;
 			
 			// aapt resource value: 0x7F0800F9
-			public const int view_tree_saved_state_registry_owner = 2131230969;
+			public const int view_offset_helper = 2131230969;
 			
 			// aapt resource value: 0x7F0800FA
-			public const int visible = 2131230970;
+			public const int view_tree_saved_state_registry_owner = 2131230970;
 			
 			// aapt resource value: 0x7F0800FB
-			public const int visible_removing_fragment_view_tag = 2131230971;
+			public const int visible = 2131230971;
 			
 			// aapt resource value: 0x7F0800FC
-			public const int winnerView = 2131230972;
+			public const int visible_removing_fragment_view_tag = 2131230972;
 			
 			// aapt resource value: 0x7F0800FD
-			public const int withText = 2131230973;
+			public const int winnerView = 2131230973;
 			
 			// aapt resource value: 0x7F0800FE
-			public const int wrap_content = 2131230974;
+			public const int withText = 2131230974;
+			
+			// aapt resource value: 0x7F0800FF
+			public const int wrap_content = 2131230975;
 			
 			static Id()
 			{
@@ -4692,130 +4695,133 @@ namespace Skyjoo
 			public const int current_card = 2131623972;
 			
 			// aapt resource value: 0x7F0E0025
-			public const int default_ip = 2131623973;
+			public const int current_player_display = 2131623973;
 			
 			// aapt resource value: 0x7F0E0026
-			public const int default_port = 2131623974;
+			public const int default_ip = 2131623974;
 			
 			// aapt resource value: 0x7F0E0027
-			public const int disconnected = 2131623975;
+			public const int default_port = 2131623975;
 			
 			// aapt resource value: 0x7F0E0028
-			public const int fab_transformation_scrim_behavior = 2131623976;
+			public const int disconnected = 2131623976;
 			
 			// aapt resource value: 0x7F0E0029
-			public const int fab_transformation_sheet_behavior = 2131623977;
+			public const int fab_transformation_scrim_behavior = 2131623977;
 			
 			// aapt resource value: 0x7F0E002A
-			public const int fallback_menu_item_copy_link = 2131623978;
+			public const int fab_transformation_sheet_behavior = 2131623978;
 			
 			// aapt resource value: 0x7F0E002B
-			public const int fallback_menu_item_open_in_browser = 2131623979;
+			public const int fallback_menu_item_copy_link = 2131623979;
 			
 			// aapt resource value: 0x7F0E002C
-			public const int fallback_menu_item_share_link = 2131623980;
+			public const int fallback_menu_item_open_in_browser = 2131623980;
 			
 			// aapt resource value: 0x7F0E002D
-			public const int fieldcard = 2131623981;
+			public const int fallback_menu_item_share_link = 2131623981;
 			
 			// aapt resource value: 0x7F0E002E
-			public const int game_current_to_field = 2131623982;
+			public const int fieldcard = 2131623982;
 			
 			// aapt resource value: 0x7F0E002F
-			public const int game_current_to_reversestack = 2131623983;
+			public const int game_current_to_field = 2131623983;
 			
 			// aapt resource value: 0x7F0E0030
-			public const int game_end = 2131623984;
+			public const int game_current_to_reversestack = 2131623984;
 			
 			// aapt resource value: 0x7F0E0031
-			public const int game_last_round_start = 2131623985;
+			public const int game_end = 2131623985;
 			
 			// aapt resource value: 0x7F0E0032
-			public const int game_restart_button = 2131623986;
+			public const int game_last_round_start = 2131623986;
 			
 			// aapt resource value: 0x7F0E0033
-			public const int game_reveal_on_field = 2131623987;
+			public const int game_restart_button = 2131623987;
 			
 			// aapt resource value: 0x7F0E0034
-			public const int game_reversestack_to_current = 2131623988;
+			public const int game_reveal_on_field = 2131623988;
 			
 			// aapt resource value: 0x7F0E0035
-			public const int game_stack_to_current = 2131623989;
+			public const int game_reversestack_to_current = 2131623989;
 			
 			// aapt resource value: 0x7F0E0036
-			public const int game_start = 2131623990;
+			public const int game_stack_to_current = 2131623990;
 			
 			// aapt resource value: 0x7F0E0037
-			public const int game_your_turn = 2131623991;
+			public const int game_start = 2131623991;
 			
 			// aapt resource value: 0x7F0E0038
-			public const int hide_bottom_view_on_scroll_behavior = 2131623992;
+			public const int game_your_turn = 2131623992;
 			
 			// aapt resource value: 0x7F0E0039
-			public const int login_message = 2131623993;
+			public const int hide_bottom_view_on_scroll_behavior = 2131623993;
 			
 			// aapt resource value: 0x7F0E003A
-			public const int logout_message = 2131623994;
+			public const int login_message = 2131623994;
 			
 			// aapt resource value: 0x7F0E003B
-			public const int mtrl_chip_close_icon_content_description = 2131623995;
+			public const int logout_message = 2131623995;
 			
 			// aapt resource value: 0x7F0E003C
-			public const int name_input = 2131623996;
+			public const int mtrl_chip_close_icon_content_description = 2131623996;
 			
 			// aapt resource value: 0x7F0E003D
-			public const int password_toggle_content_description = 2131623997;
+			public const int name_input = 2131623997;
 			
 			// aapt resource value: 0x7F0E003E
-			public const int path_password_eye = 2131623998;
+			public const int password_toggle_content_description = 2131623998;
 			
 			// aapt resource value: 0x7F0E003F
-			public const int path_password_eye_mask_strike_through = 2131623999;
+			public const int path_password_eye = 2131623999;
 			
 			// aapt resource value: 0x7F0E0040
-			public const int path_password_eye_mask_visible = 2131624000;
+			public const int path_password_eye_mask_strike_through = 2131624000;
 			
 			// aapt resource value: 0x7F0E0041
-			public const int path_password_strike_through = 2131624001;
+			public const int path_password_eye_mask_visible = 2131624001;
 			
 			// aapt resource value: 0x7F0E0042
-			public const int player_placeholder = 2131624002;
+			public const int path_password_strike_through = 2131624002;
 			
 			// aapt resource value: 0x7F0E0043
-			public const int search_menu_title = 2131624003;
+			public const int player_placeholder = 2131624003;
 			
 			// aapt resource value: 0x7F0E0044
-			public const int server_button = 2131624004;
+			public const int search_menu_title = 2131624004;
 			
 			// aapt resource value: 0x7F0E0045
-			public const int server_status = 2131624005;
+			public const int server_button = 2131624005;
 			
 			// aapt resource value: 0x7F0E0046
-			public const int start = 2131624006;
+			public const int server_status = 2131624006;
 			
 			// aapt resource value: 0x7F0E0047
-			public const int start_game = 2131624007;
+			public const int start = 2131624007;
 			
 			// aapt resource value: 0x7F0E0048
-			public const int status_bar_notification_info_overflow = 2131624008;
+			public const int start_game = 2131624008;
 			
 			// aapt resource value: 0x7F0E0049
-			public const int stopped = 2131624009;
+			public const int status_bar_notification_info_overflow = 2131624009;
 			
 			// aapt resource value: 0x7F0E004A
-			public const int type_ip = 2131624010;
+			public const int stopped = 2131624010;
 			
 			// aapt resource value: 0x7F0E004B
-			public const int type_message = 2131624011;
+			public const int type_ip = 2131624011;
 			
 			// aapt resource value: 0x7F0E004C
-			public const int type_port = 2131624012;
+			public const int type_message = 2131624012;
 			
 			// aapt resource value: 0x7F0E004D
-			public const int waiting_for_host = 2131624013;
+			public const int type_port = 2131624013;
 			
 			// aapt resource value: 0x7F0E004E
-			public const int winner_header = 2131624014;
+			public const int waiting_for_host = 2131624014;
+			
+			// aapt resource value: 0x7F0E004F
+			public const int winner_header = 2131624015;
 			
 			static String()
 			{

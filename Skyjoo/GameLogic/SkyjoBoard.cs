@@ -50,6 +50,7 @@ namespace Skyjoo.GameLogic
             ReverseSkyjoCardStack = new ReverseSkyjoCardStack();
             SkyjoCardStack = SkyjoCardStack.GetCardStack(stackSeed);
             createPlayers(players);
+            updateCurrentPlayerDisplay(CurrentActivePlayerIndex);
             initUI();
             showToast(activity.Resources.GetString(Resource.String.game_start));
         }
@@ -123,6 +124,7 @@ namespace Skyjoo.GameLogic
                 if (CurrentActivePlayerIndex == Players.Length) CurrentActivePlayerIndex = 0;
             }
             while (!Players[CurrentActivePlayerIndex].Active);
+            updateCurrentPlayerDisplay(CurrentActivePlayerIndex);
 
             if (lastRoundStarter == CurrentActivePlayerIndex)
                 endGame();

@@ -1,4 +1,5 @@
-﻿using Android.Views;
+﻿using Android.Content.Res;
+using Android.Views;
 using Android.Widget;
 using System.Collections.Generic;
 using Xamarin.Essentials;
@@ -176,6 +177,13 @@ namespace Skyjoo.GameLogic
             activity.RunOnUiThread(() =>
             {
                 Toast.MakeText(activity, message, ToastLength.Short).Show();
+            });
+        }
+
+        private void updateCurrentPlayerDisplay(int playerIndex)
+        {
+            activity.RunOnUiThread(() => {
+                activity.FindViewById<TextView>(Resource.Id.textCurrentPlayer).Text = string.Format(activity.Resources.GetString(Resource.String.current_player_display), Players[playerIndex].Name);
             });
         }
     }
