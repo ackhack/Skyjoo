@@ -129,10 +129,19 @@ namespace Skyjoo.GameLogic
                     return;
             }
 
+            writeToChangelog(updateText);
+        }
+
+        /// <summary>
+        /// Writes text to changelog
+        /// </summary>
+        /// <param name="text">The text to write</param>
+        private void writeToChangelog(string text)
+        {
             activity.RunOnUiThread(() =>
             {
                 var view = activity.FindViewById<TextView>(Resource.Id.textChangelog);
-                view.Text = updateText + "\n" + view.Text;
+                view.Text = text + "\n" + view.Text;
                 view.Invalidate();
             });
         }
@@ -163,6 +172,7 @@ namespace Skyjoo.GameLogic
         /// <param name="message">The message</param>
         private void showToast(string message)
         {
+            writeToChangelog(message);
             activity.RunOnUiThread(() =>
             {
                 Toast.MakeText(activity, message, ToastLength.Short).Show();
