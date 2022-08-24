@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Views;
@@ -14,7 +15,7 @@ using System.Text;
 
 namespace Skyjoo
 {
-    [Activity(Label = "Server", MainLauncher = false, Icon = "@drawable/icon")]
+    [Activity(Label = "Server", MainLauncher = false, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class ServerActivity : Activity, TextView.IOnEditorActionListener
     {
         protected override void OnCreate(Bundle bundle)

@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content.PM;
 using Android.OS;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace Skyjoo
 {
-    [Activity(Label = "Game", MainLauncher = false, Icon = "@drawable/icon")]
+    [Activity(Label = "Game", MainLauncher = false, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class GameActivity : Activity
     {
 

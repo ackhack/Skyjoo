@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
 using Android.Widget;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace Skyjoo
 {
-    [Activity(Label = "Client", MainLauncher = false, Icon = "@drawable/icon")]
+    [Activity(Label = "Client", MainLauncher = false, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class ClientActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
