@@ -16,48 +16,12 @@ namespace Skyjoo.GameLogic
 
         public static int GetPlaceholderImageId()
         {
-            return Resource.Drawable.IconPlaceholder;
+            return DependencyClass.ImageHandler.GetPlaceholderImageId();
         }
 
         public int GetImageId()
         {
-            if (!IsVisible) return Resource.Drawable.IconBack;
-            switch (Number)
-            {
-                case SkyjoCardNumber.Minus2:
-                    return Resource.Drawable.IconM2;
-                case SkyjoCardNumber.Minus1:
-                    return Resource.Drawable.IconM1;
-                case SkyjoCardNumber.Zero:
-                    return Resource.Drawable.Icon0;
-                case SkyjoCardNumber.Plus1:
-                    return Resource.Drawable.Icon1;
-                case SkyjoCardNumber.Plus2:
-                    return Resource.Drawable.Icon2;
-                case SkyjoCardNumber.Plus3:
-                    return Resource.Drawable.Icon3;
-                case SkyjoCardNumber.Plus4:
-                    return Resource.Drawable.Icon4;
-                case SkyjoCardNumber.Plus5:
-                    return Resource.Drawable.Icon5;
-                case SkyjoCardNumber.Plus6:
-                    return Resource.Drawable.Icon6;
-                case SkyjoCardNumber.Plus7:
-                    return Resource.Drawable.Icon7;
-                case SkyjoCardNumber.Plus8:
-                    return Resource.Drawable.Icon8;
-                case SkyjoCardNumber.Plus9:
-                    return Resource.Drawable.Icon9;
-                case SkyjoCardNumber.Plus10:
-                    return Resource.Drawable.Icon10;
-                case SkyjoCardNumber.Plus11:
-                    return Resource.Drawable.Icon11;
-                case SkyjoCardNumber.Plus12:
-                    return Resource.Drawable.Icon12;
-                case SkyjoCardNumber.Placeholder:
-                    return Resource.Drawable.IconPlaceholder;
-            }
-            return Resource.Drawable.IconPlaceholder;
+            return DependencyClass.ImageHandler.GetCardImageId(Number,IsVisible);
         }
 
         public int GetValue()

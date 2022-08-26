@@ -81,6 +81,8 @@
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ServerActivity.cs" />
     <Compile Include="GameLogic\FieldUpdateEventArgs.cs" />
+    <Compile Include="GameLogic\Images\ImageHandler.cs" />
+    <Compile Include="GameLogic\Images\ImageMapping.cs" />
     <Compile Include="GameLogic\ReverseSkyjoCardStack.cs" />
     <Compile Include="GameLogic\SkyjoBoard.ClickHandler.cs" />
     <Compile Include="GameLogic\SkyjoBoard.EventHandlers.cs" />
@@ -163,55 +165,55 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon0.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon0.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon1.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon1.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\IconM1.png" />
+    <AndroidResource Include="Resources\drawable\default_IconM1.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon2.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon2.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\IconM2.png" />
+    <AndroidResource Include="Resources\drawable\default_IconM2.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon3.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon3.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon4.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon4.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon5.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon5.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon6.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon6.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon7.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon7.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon8.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon8.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon9.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon9.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon10.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon10.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon11.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon11.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Icon12.png" />
+    <AndroidResource Include="Resources\drawable\default_Icon12.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\IconBack.png" />
+    <AndroidResource Include="Resources\drawable\default_IconBack.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\IconPlaceholder.png" />
+    <AndroidResource Include="Resources\drawable\default_IconPlaceholder.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\results_layout.xml">
@@ -241,6 +243,57 @@
     <AndroidResource Include="Resources\layout\waiting_layout.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_IconPlaceholder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_IconBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_Icon12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_IconM1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\beer_IconM2.png" />
   </ItemGroup>
   <Import Project="..\NetworkCommunication.Core\NetworkCommunication.Core.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

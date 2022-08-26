@@ -1,15 +1,21 @@
 ﻿using Android.App;
+using Android.Bluetooth;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using Skyjoo.GameLogic.Images;
 using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Resources;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
+using static Android.Icu.Text.Transliterator;
+using static Android.Webkit.WebSettings;
+using static Java.Util.Jar.Attributes;
 
 [assembly: NeutralResourcesLanguage("en-US")]
 namespace Skyjoo
@@ -30,6 +36,11 @@ namespace Skyjoo
             var nameBox = FindViewById<EditText>(Resource.Id.textName);
             nameBox.Text = getName().Result;
 
+            var iconPackSpinner = FindViewById<Spinner>(Resource.Id.spinner_iconpack);
+            iconPackSpinner.Adapter = new IconPackAdapter(this);
+            iconPackSpinner.ItemSelected += onIconPackSpinnerItemSelected;
+            iconPackSpinner.SetSelection((int)getIconPack());
+
             try
             {
                 using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, 0))
@@ -48,6 +59,7 @@ namespace Skyjoo
             {
                 if (nameBox.Text.Length > 0)
                 {
+                    setIconPack((IconPack)iconPackSpinner.SelectedItemPosition);
                     setName(nameBox.Text);
                     DependencyClass.Playername = nameBox.Text;
                     StartActivity(typeof(ServerActivity));
@@ -58,11 +70,17 @@ namespace Skyjoo
             {
                 if (nameBox.Text.Length > 0)
                 {
+                    setIconPack((IconPack)iconPackSpinner.SelectedItemPosition);
                     setName(nameBox.Text);
                     DependencyClass.Playername = nameBox.Text;
                     StartActivity(typeof(ClientActivity));
                 }
             };
+        }
+
+        private void onIconPackSpinnerItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            DependencyClass.IconPack = (IconPack)e.Position;
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -88,6 +106,51 @@ namespace Skyjoo
             {
                 return DeviceInfo.Name;
             }
+        }
+        private void setIconPack(IconPack pack)
+        {
+            SecureStorage.SetAsync("iconPack", pack.ToString());
+        }
+
+        private IconPack getIconPack()
+        {
+            try
+            {
+                return (IconPack)Enum.Parse(typeof(IconPack), SecureStorage.GetAsync("iconPack").Result);
+            }
+            catch (Exception)
+            {
+                return IconPack.Default;
+            }
+        }
+    }
+
+    class IconPackAdapter : BaseAdapter
+    {
+        private Activity activity;
+        public override int Count => Enum.GetNames(typeof(IconPack)).Length;
+
+        public IconPackAdapter(Activity activity)
+        {
+            this.activity = activity;
+        }
+
+        public override Java.Lang.Object GetItem(int position)
+        {
+            return Enum.GetNames(typeof(IconPack))[position];
+        }
+
+        public override long GetItemId(int position)
+        {
+            return 0;
+        }
+
+        public override View GetView(int position, View convertView, ViewGroup parent)
+        {
+            TextView imageView = new TextView(activity);
+            imageView.Text = Enum.GetNames(typeof(IconPack))[position];
+            imageView.TextSize = 16;
+            return imageView;
         }
     }
 }

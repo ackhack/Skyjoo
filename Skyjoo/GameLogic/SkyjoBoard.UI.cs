@@ -32,20 +32,20 @@ namespace Skyjoo.GameLogic
 
                 var sizeS = (int)DeviceDisplay.MainDisplayInfo.Width >> 2;
                 var rStack = activity.FindViewById<ImageView>(Resource.Id.img_reverseStackCard);
-                rStack.SetScaleType(ImageView.ScaleType.CenterCrop);
+                rStack.SetScaleType(ImageView.ScaleType.CenterInside);
                 rStack.LayoutParameters.Height = sizeS;
                 rStack.LayoutParameters.Width = sizeS;
                 rStack.Click += onReverseStackClick;
 
                 var stack = activity.FindViewById<ImageView>(Resource.Id.img_stackCard);
-                stack.SetScaleType(ImageView.ScaleType.CenterCrop);
+                stack.SetScaleType(ImageView.ScaleType.CenterInside);
                 stack.LayoutParameters.Height = sizeS;
                 stack.LayoutParameters.Width = sizeS;
                 stack.Click += onStackClick;
 
                 var sizeL = (int)(DeviceDisplay.MainDisplayInfo.Width) >> 1;
                 var currCardView = activity.FindViewById<ImageView>(Resource.Id.img_currentCard);
-                currCardView.SetScaleType(ImageView.ScaleType.CenterCrop);
+                currCardView.SetScaleType(ImageView.ScaleType.CenterInside);
                 currCardView.LayoutParameters.Height = sizeL;
                 currCardView.LayoutParameters.Width = sizeL;
                 currCardView.Click += onCurrentCardClick;

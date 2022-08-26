@@ -41,7 +41,7 @@ namespace Skyjoo.GameLogic
             {
                 ImageView imageView = new ImageView(mContext);
                 imageView.SetImageResource(board.DisplayedField.FieldCards[position].GetImageId());
-                imageView.SetScaleType(ImageView.ScaleType.CenterCrop);
+                imageView.SetScaleType(ImageView.ScaleType.CenterInside);
                 var size = (int)(DeviceDisplay.MainDisplayInfo.Width / 4 - 10);
                 imageView.LayoutParameters = new GridView.LayoutParams(size, size);
                 return imageView;

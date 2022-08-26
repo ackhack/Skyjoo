@@ -33,4 +33,5 @@
 	<string name="game_start">"Spiel beginnt"</string>
 	<string name="waiting_for_host">"Warte auf den Host um das Spiel zu starten"</string>
 	<string name="current_player_display">"Aktueller Spieler: {0}"</string>
+	<string name="iconpack_input">"Iconpack"</string>
 </resources>
