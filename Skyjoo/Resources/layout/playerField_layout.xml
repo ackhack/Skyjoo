@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/img_currentCard"
                 android:contentDescription="@string/current_card"
-                android:layout_gravity="center"
+                android:layout_gravity="top"
                 android:src="@drawable/default_IconPlaceholder"/>
             <LinearLayout
                 android:layout_width="wrap_content"
