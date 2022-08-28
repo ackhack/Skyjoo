@@ -1,21 +1,16 @@
 ﻿using Android.App;
-using Android.Bluetooth;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
-using Skyjoo.GameLogic.Images;
+using Skyjoo.Images;
 using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Resources;
-using System.Threading.Tasks;
 using Xamarin.Essentials;
-using static Android.Icu.Text.Transliterator;
-using static Android.Webkit.WebSettings;
-using static Java.Util.Jar.Attributes;
 
 [assembly: NeutralResourcesLanguage("en-US")]
 namespace Skyjoo
@@ -29,17 +24,19 @@ namespace Skyjoo
             Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
+            DependencyClass.StorageHandler = new Storage.StorageHandler();
+
             var btnServer = FindViewById<Button>(Resource.Id.btnServer);
 
             var btnClient = FindViewById<Button>(Resource.Id.btnClient);
 
             var nameBox = FindViewById<EditText>(Resource.Id.textName);
-            nameBox.Text = getName().Result;
+            nameBox.Text = DependencyClass.StorageHandler.GetName();
 
             var iconPackSpinner = FindViewById<Spinner>(Resource.Id.spinner_iconpack);
             iconPackSpinner.Adapter = new IconPackAdapter(this);
             iconPackSpinner.ItemSelected += onIconPackSpinnerItemSelected;
-            iconPackSpinner.SetSelection((int)getIconPack());
+            iconPackSpinner.SetSelection((int)DependencyClass.StorageHandler.GetIconPack());
 
             try
             {
@@ -59,8 +56,8 @@ namespace Skyjoo
             {
                 if (nameBox.Text.Length > 0)
                 {
-                    setIconPack((IconPack)iconPackSpinner.SelectedItemPosition);
-                    setName(nameBox.Text);
+                    DependencyClass.StorageHandler.SetIconPack((IconPack)iconPackSpinner.SelectedItemPosition);
+                    DependencyClass.StorageHandler.SetName(nameBox.Text);
                     DependencyClass.Playername = nameBox.Text;
                     StartActivity(typeof(ServerActivity));
                 }
@@ -70,8 +67,8 @@ namespace Skyjoo
             {
                 if (nameBox.Text.Length > 0)
                 {
-                    setIconPack((IconPack)iconPackSpinner.SelectedItemPosition);
-                    setName(nameBox.Text);
+                    DependencyClass.StorageHandler.SetIconPack((IconPack)iconPackSpinner.SelectedItemPosition);
+                    DependencyClass.StorageHandler.SetName(nameBox.Text);
                     DependencyClass.Playername = nameBox.Text;
                     StartActivity(typeof(ClientActivity));
                 }
@@ -88,40 +85,6 @@ namespace Skyjoo
             Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        private void setName(string name)
-        {
-            if (name != DeviceInfo.Name)
-                SecureStorage.SetAsync("username", name);
-        }
-
-        async private Task<string> getName()
-        {
-            try
-            {
-                return await SecureStorage.GetAsync("username") ?? DeviceInfo.Name;
-            }
-            catch (Exception)
-            {
-                return DeviceInfo.Name;
-            }
-        }
-        private void setIconPack(IconPack pack)
-        {
-            SecureStorage.SetAsync("iconPack", pack.ToString());
-        }
-
-        private IconPack getIconPack()
-        {
-            try
-            {
-                return (IconPack)Enum.Parse(typeof(IconPack), SecureStorage.GetAsync("iconPack").Result);
-            }
-            catch (Exception)
-            {
-                return IconPack.Default;
-            }
         }
     }
 

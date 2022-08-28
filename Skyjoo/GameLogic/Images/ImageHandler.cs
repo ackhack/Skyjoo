@@ -1,4 +1,6 @@
-﻿namespace Skyjoo.GameLogic.Images
+﻿using Skyjoo.GameLogic;
+
+namespace Skyjoo.Images
 {
     public class ImageHandler
     {

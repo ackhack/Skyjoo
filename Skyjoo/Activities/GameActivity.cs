@@ -110,7 +110,7 @@ namespace Skyjoo
 
         private void startGame(SkyjoGameInfo info)
         {
-            DependencyClass.ImageHandler = new GameLogic.Images.ImageHandler(DependencyClass.IconPack);
+            DependencyClass.ImageHandler = new Images.ImageHandler(DependencyClass.IconPack);
             int i = 0;
             foreach (var value in info.Players)
             {

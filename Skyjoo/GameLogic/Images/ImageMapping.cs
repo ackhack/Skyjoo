@@ -1,6 +1,6 @@
-﻿using Java.Lang;
+﻿using Skyjoo.GameLogic;
 
-namespace Skyjoo.GameLogic.Images
+namespace Skyjoo.Images
 {
     public class ImageMapping
     {
