@@ -80,6 +80,7 @@
     <Compile Include="Activities\GameActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ServerActivity.cs" />
+    <Compile Include="Activities\StorageHandler.cs" />
     <Compile Include="GameLogic\FieldUpdateEventArgs.cs" />
     <Compile Include="GameLogic\Images\ImageHandler.cs" />
     <Compile Include="GameLogic\Images\ImageMapping.cs" />
@@ -127,6 +128,12 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Core">
+      <Version>20.2.0.45</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfListView">
+      <Version>20.2.0.45</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />
     <PackageReference Include="Xamarin.Google.Android.Material" Version="1.0.0.1" />
