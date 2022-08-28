@@ -9,6 +9,7 @@ using Android.Widget;
 using NetworkCommunication.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Skyjoo.Dependency;
 using Skyjoo.GameLogic;
 using System;
 using System.Text;

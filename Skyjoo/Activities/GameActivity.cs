@@ -3,6 +3,7 @@ using Android.Content.PM;
 using Android.OS;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Skyjoo.Dependency;
 using Skyjoo.GameLogic;
 using System;
 using System.Text;

@@ -5,6 +5,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using Skyjoo.Dependency;
 using Skyjoo.Images;
 using System;
 using System.Net;

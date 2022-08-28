@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Skyjoo.Images;
 using Skyjoo.Storage;
 
-namespace Skyjoo
+namespace Skyjoo.Dependency
 {
     internal class DependencyClass
     {
