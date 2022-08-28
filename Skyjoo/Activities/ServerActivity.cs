@@ -169,6 +169,10 @@ namespace Skyjoo
                 }
 
                 socketServer.StateChanged -= SocketServer_StateChanged;
+
+                DependencyClass.Client = null;
+                DependencyClass.Server = null;
+                DependencyClass.PlayerLogins = new System.Collections.Generic.Dictionary<string, string>();
             }
         }
 

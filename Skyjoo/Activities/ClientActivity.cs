@@ -94,6 +94,7 @@ namespace Skyjoo
                 }
 
                 socketClient.StateChanged -= SocketClient_StateChanged;
+                DependencyClass.Client = null;
             }
         }
 
