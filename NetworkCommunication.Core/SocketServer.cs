@@ -59,12 +59,14 @@ namespace NetworkCommunication.Core
         }
 
         private List<RemoteHost> clients = new List<RemoteHost>();
+        private int maxClients;
 
         /// <summary>
         /// Initializes a new instance of the server class.
         /// </summary>
-        public SocketServer()
+        public SocketServer(int maxClients = 100)
         {
+            this.maxClients = maxClients;
             this.state = SocketServerState.Stopped;
         }
 
@@ -80,7 +82,7 @@ namespace NetworkCommunication.Core
 
                 OnStateChanged(SocketServerState.Starting);
 
-                var thread = new Thread(Listening);
+                var thread = new Thread(initListening);
 
                 thread.IsBackground = true;
 
@@ -102,9 +104,9 @@ namespace NetworkCommunication.Core
         }
 
         /// <summary>
-        /// Starts listening for the incomming connections on specified port.
+        /// Inits the listening for the incoming connections on specified port.
         /// </summary>
-        private void Listening()
+        private void initListening()
         {
             try
             {
@@ -121,8 +123,23 @@ namespace NetworkCommunication.Core
                 var senderThread = new Thread(HostSender);
                 senderThread.IsBackground = true;
                 senderThread.Start();
+                Listening();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                stopServer();
+            }
+        }
 
-                while (state == SocketServerState.Running)
+        /// <summary>
+        /// Listening for the incoming connections on specified port.
+        /// </summary>
+        private void Listening()
+        {
+            try
+            {
+                while (state == SocketServerState.Running && clients.Count < maxClients)
                 {
                     var host = new RemoteHost(mainSocket.Accept());
 
@@ -138,9 +155,6 @@ namespace NetworkCommunication.Core
             catch (Exception ex)
             {
                 Console.WriteLine(ex.StackTrace);
-            }
-            finally
-            {
                 OnStateChanged(SocketServerState.Stopped);
 
                 for (int index = 0; index < clients.Count; index++)
@@ -152,9 +166,28 @@ namespace NetworkCommunication.Core
                         host.Connection.Close();
                     }
                 }
-
                 clients.Clear();
             }
+        }
+
+        /// <summary>
+        /// Stops the Server and disconnects Clients.
+        /// </summary>
+        private void stopServer()
+        {
+            OnStateChanged(SocketServerState.Stopped);
+
+            for (int index = 0; index < clients.Count; index++)
+            {
+                var host = clients[index];
+
+                if (host.Connection.Connected)
+                {
+                    host.Connection.Close();
+                }
+            }
+
+            clients.Clear();
         }
 
         /// <summary>
@@ -187,6 +220,10 @@ namespace NetworkCommunication.Core
             {
                 OnHostClosedConnection(host);
                 clients.Remove(host);
+                if (clients.Count >= maxClients - 1)
+                {
+                    new Thread(Listening).Start();
+                }
             }
         }
 
@@ -217,6 +254,10 @@ namespace NetworkCommunication.Core
                         {
                             OnHostClosedConnection(host);
                             clients.Remove(host);
+                            if (clients.Count >= maxClients - 1)
+                            {
+                                new Thread(Listening).Start();
+                            }
                             i--;
                         }
                     }
