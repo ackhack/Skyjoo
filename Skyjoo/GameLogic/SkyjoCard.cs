@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skyjoo.Dependency;
+using System;
 
 namespace Skyjoo.GameLogic
 {

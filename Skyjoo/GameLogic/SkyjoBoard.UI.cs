@@ -1,6 +1,7 @@
 ﻿using Android.Content.Res;
 using Android.Views;
 using Android.Widget;
+using Skyjoo.Dependency;
 using System.Collections.Generic;
 using Xamarin.Essentials;
 
