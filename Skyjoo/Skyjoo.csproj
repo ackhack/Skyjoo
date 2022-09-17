@@ -80,6 +80,10 @@
     <Compile Include="Activities\GameActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ServerActivity.cs" />
+    <Compile Include="ReOrderView\IOnStartDragListener.cs" />
+    <Compile Include="ReOrderView\ITemTouchHelperAdapter.cs" />
+    <Compile Include="ReOrderView\ReOrderAdapter.cs" />
+    <Compile Include="ReOrderView\SimpleItemTouchHelperCallback.cs" />
     <Compile Include="Storage\StorageHandler.cs" />
     <Compile Include="GameLogic\FieldUpdateEventArgs.cs" />
     <Compile Include="Images\ImageHandler.cs" />
@@ -302,7 +306,16 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\beer_IconM2.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\reorderListItem.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\itemBorder.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <Import Project="..\NetworkCommunication.Core\NetworkCommunication.Core.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

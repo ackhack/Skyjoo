@@ -6,18 +6,23 @@ using Android.OS;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using AndroidX.RecyclerView.Widget;
 using NetworkCommunication.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skyjoo.Dependency;
 using Skyjoo.GameLogic;
+using Skyjoo.ReOrderView;
 using System;
 using System.Text;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Skyjoo
 {
     [Activity(Label = "Server", MainLauncher = false, Icon = "@drawable/icon", ScreenOrientation = ScreenOrientation.Portrait)]
-    public class ServerActivity : Activity, TextView.IOnEditorActionListener
+    public class ServerActivity : Activity, TextView.IOnEditorActionListener, IOnStartDragListener
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -25,34 +30,33 @@ namespace Skyjoo
 
             SetContentView(Resource.Layout.server_layout);
 
+            PlayerList = new ObservableCollection<ReOrderListItem>();
+            playerRecycler = FindViewById<RecyclerView>(Resource.Id.recyclerPlayers);
+            var resourceAdapter = new ReOrderAdapters(PlayerList, this);
+            playerRecycler = FindViewById<RecyclerView>(Resource.Id.recyclerPlayers);
+            playerRecycler.SetLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.Vertical, false));
+            playerRecycler.SetAdapter(resourceAdapter);
+            playerRecycler.HasFixedSize = true;
+
+            ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(resourceAdapter);
+            playerItemTouchHelper = new ItemTouchHelper(callback);
+            playerItemTouchHelper.AttachToRecyclerView(playerRecycler);
 
             lblServerStatus = FindViewById<TextView>(Resource.Id.lblServerStatus);
-
             txtPort = FindViewById<EditText>(Resource.Id.txtPort);
-
             btnStartGame = FindViewById<Button>(Resource.Id.btnStartGame);
-
-
-            txtMessages = FindViewById<TextView>(Resource.Id.txtMessages);
-
             btnStartGame.Click += BtnStartGame_Click;
-
             txtPort.SetOnEditorActionListener(this);
 
             var ipTV = FindViewById<TextView>(Resource.Id.textHostIp);
-
             ipTV.Text = DependencyClass.LocalIp;
 
-            socketServer = new SocketServer();
-
+            socketServer = new SocketServer(8);
             socketServer.StateChanged += SocketServer_StateChanged;
-
             DependencyClass.Server = socketServer;
 
             port = int.Parse(Resources.GetString(Resource.String.default_port));
-
             int.TryParse(txtPort.Text, out port);
-
             socketServer.Run(port);
             socketServer.ReceivedMessage += SocketServer_ReceivedMessage;
         }
@@ -70,17 +74,15 @@ namespace Skyjoo
                 {
                     case SkyjoClientMessageType.Login:
                         var loginMessage = content.ToObject<SkyjoClientLoginMessage>();
-                        DependencyClass.PlayerLogins.Add(senderIp, loginMessage.UserName);
-                        AddMessage(string.Format(Resources.GetString(Resource.String.login_message), loginMessage.UserName));
+                        AddPlayer(senderIp, loginMessage.UserName);
                         break;
                     case SkyjoClientMessageType.FieldUpdate:
                         //game hasnt started yet
                         break;
                     case SkyjoClientMessageType.Logout:
-                        if (DependencyClass.PlayerLogins.TryGetValue(senderIp, out var user))
+                        if (DependencyClass.PlayerLogins.TryGetValue(senderIp, out var name))
                         {
-                            AddMessage(string.Format(Resources.GetString(Resource.String.logout_message), user));
-                            DependencyClass.PlayerLogins.Remove(senderIp);
+                            RemovePlayer(senderIp, name);
                         }
                         break;
                 }
@@ -96,17 +98,38 @@ namespace Skyjoo
         {
             if (socketServer.State == SocketServerState.Running && socketClient.State == SocketClientState.Connected)
             {
+                foreach (var item in PlayerList.Reverse())
+                {
+                    DependencyClass.PlayerLogins.Add(item.Ip, item.Name);
+                }
                 StartActivity(typeof(GameActivity));
                 socketServer.ReceivedMessage -= SocketServer_ReceivedMessage;
             }
         }
 
-        protected void AddMessage(string message)
+        protected void AddPlayer(string ip,string name)
         {
+            PlayerList.Add(new ReOrderListItem(ip,name));
             RunOnUiThread(() =>
+            {
+                playerRecycler.GetAdapter().NotifyDataSetChanged();
+            });
+        }
+
+        protected void RemovePlayer(string ip, string name)
+        {
+            foreach (var item in PlayerList)
+            {
+                if (item.Ip == ip)
                 {
-                    txtMessages.Text = txtMessages.Text.Insert(0, string.Format("{0}\n", message));
-                });
+                    PlayerList.Remove(item);
+                    break;
+                }
+            }
+            RunOnUiThread(() =>
+            {
+                playerRecycler.GetAdapter().NotifyDataSetChanged();
+            });
         }
 
         protected void SocketServer_StateChanged(object sender, SocketServerState state)
@@ -171,9 +194,10 @@ namespace Skyjoo
 
                 socketServer.StateChanged -= SocketServer_StateChanged;
 
+                PlayerList.Clear();
                 DependencyClass.Client = null;
                 DependencyClass.Server = null;
-                DependencyClass.PlayerLogins = new System.Collections.Generic.Dictionary<string, string>();
+                DependencyClass.PlayerLogins = new Dictionary<string, string>();
             }
         }
 
@@ -191,7 +215,16 @@ namespace Skyjoo
             return false;
         }
 
-        private TextView txtMessages;
+        public void OnStartDrag(RecyclerView.ViewHolder viewHolder)
+        {
+            playerItemTouchHelper.StartDrag(viewHolder);
+        }
+
+        private RecyclerView playerRecycler;
+
+        public ObservableCollection<ReOrderListItem> PlayerList;
+
+        private ItemTouchHelper playerItemTouchHelper;
 
         private TextView lblServerStatus;
 
