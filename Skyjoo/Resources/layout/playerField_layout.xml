@@ -7,7 +7,6 @@
     <GridView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="4"
         android:id="@+id/view_cards"/>
     <LinearLayout
         android:layout_width="match_parent"

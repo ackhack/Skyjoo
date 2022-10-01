@@ -18,6 +18,7 @@ using System.Text;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
+using Skyjoo.GameLogic.Bots;
 
 namespace Skyjoo
 {
@@ -41,6 +42,8 @@ namespace Skyjoo
             ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(resourceAdapter);
             playerItemTouchHelper = new ItemTouchHelper(callback);
             playerItemTouchHelper.AttachToRecyclerView(playerRecycler);
+
+            FindViewById<Button>(Resource.Id.btnClient).Click += OnAddBotClick;
 
             lblServerStatus = FindViewById<TextView>(Resource.Id.lblServerStatus);
             txtPort = FindViewById<EditText>(Resource.Id.txtPort);
@@ -80,10 +83,7 @@ namespace Skyjoo
                         //game hasnt started yet
                         break;
                     case SkyjoClientMessageType.Logout:
-                        if (DependencyClass.PlayerLogins.TryGetValue(senderIp, out var name))
-                        {
-                            RemovePlayer(senderIp, name);
-                        }
+                        RemovePlayer(senderIp);
                         break;
                 }
             }
@@ -98,7 +98,7 @@ namespace Skyjoo
         {
             if (socketServer.State == SocketServerState.Running && socketClient.State == SocketClientState.Connected)
             {
-                foreach (var item in PlayerList.Reverse())
+                foreach (var item in PlayerList)
                 {
                     DependencyClass.PlayerLogins.Add(item.Ip, item.Name);
                 }
@@ -107,29 +107,38 @@ namespace Skyjoo
             }
         }
 
-        protected void AddPlayer(string ip,string name)
+        protected void AddBot(BotDifficulty difficulty)
         {
-            PlayerList.Add(new ReOrderListItem(ip,name));
+            if (AddPlayer(BaseBot.GetBotString(difficulty) + nBots, BaseBot.GetFriendlyBotString(difficulty,Resources)))
+                nBots++;
+        }
+
+        protected bool AddPlayer(string ip, string name)
+        {
+            if (PlayerList.Count >= 8) return false;
+            PlayerList.Add(new ReOrderListItem(ip, name));
             RunOnUiThread(() =>
             {
                 playerRecycler.GetAdapter().NotifyDataSetChanged();
             });
+            return true;
         }
 
-        protected void RemovePlayer(string ip, string name)
+        protected void RemovePlayer(string ip)
         {
             foreach (var item in PlayerList)
             {
                 if (item.Ip == ip)
                 {
                     PlayerList.Remove(item);
+                    RunOnUiThread(() =>
+                    {
+                        playerRecycler.GetAdapter().NotifyDataSetChanged();
+                    });
                     break;
                 }
             }
-            RunOnUiThread(() =>
-            {
-                playerRecycler.GetAdapter().NotifyDataSetChanged();
-            });
+
         }
 
         protected void SocketServer_StateChanged(object sender, SocketServerState state)
@@ -220,23 +229,26 @@ namespace Skyjoo
             playerItemTouchHelper.StartDrag(viewHolder);
         }
 
+        private void OnAddBotClick(object sender, EventArgs e)
+        {
+            new AlertDialog.Builder(this)
+                .SetTitle(Resources.GetString(Resource.String.add_bot))
+                .SetNeutralButton(BaseBot.GetFriendlyBotString(BotDifficulty.EASY,Resources), (obj, args) => { AddBot(BotDifficulty.EASY); })
+                .SetNegativeButton(BaseBot.GetFriendlyBotString(BotDifficulty.MEDIUM, Resources), (obj, args) => { AddBot(BotDifficulty.MEDIUM); })
+                //.SetPositiveButton(BaseBot.GetFriendlyBotString(BotDifficulty.HARD, Resources), (obj, args) => { AddBot(BotDifficulty.HARD); })
+                .Show();
+        }
+
         private RecyclerView playerRecycler;
-
         public ObservableCollection<ReOrderListItem> PlayerList;
-
         private ItemTouchHelper playerItemTouchHelper;
-
         private TextView lblServerStatus;
-
         private EditText txtPort;
-
         private Button btnStartGame;
-
         private SocketServer socketServer;
-
         private SocketClient socketClient;
-
         private int port;
+        private int nBots;
     }
 }
 

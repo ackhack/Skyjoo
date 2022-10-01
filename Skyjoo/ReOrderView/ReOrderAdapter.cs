@@ -7,16 +7,17 @@ using System.Collections.Generic;
 
 namespace Skyjoo.ReOrderView
 {
-    public class ReOrderAdapters : RecyclerView.Adapter, ITemTouchHelperAdapter, IOnLongClickListener
+    public class ReOrderAdapters : RecyclerView.Adapter, ITemTouchHelperAdapter
     {
         private readonly ObservableCollection<ReOrderListItem> itemList;
         private readonly ServerActivity serverActivity;
-        private ReOrderViewHolder _reOrderViewHolder;
+        private List<ReOrderViewHolder> reOrderViewHolders;
 
         public ReOrderAdapters(ObservableCollection<ReOrderListItem> list, ServerActivity serverActivity)
         {
             itemList = list;
             this.serverActivity = serverActivity;
+            reOrderViewHolders = new List<ReOrderViewHolder>();
         }
 
         public override int ItemCount => itemList.Count;
@@ -26,9 +27,21 @@ namespace Skyjoo.ReOrderView
             var viewHolder = holder as ReOrderViewHolder;
             if (viewHolder == null) return;
 
-            _reOrderViewHolder = viewHolder;
-            viewHolder.ResourceName.SetOnLongClickListener(this);
+            reOrderViewHolders.Add(viewHolder);
+            viewHolder.ResourceName.LongClick += ResourceName_LongClick;
             viewHolder.ResourceName.Text = (itemList[position].Name);
+        }
+
+        private void ResourceName_LongClick(object sender, LongClickEventArgs e)
+        {
+            foreach (var holder in reOrderViewHolders)
+            {
+                if (holder.ResourceName == sender)
+                {
+                    serverActivity.OnStartDrag(holder);
+                    break;
+                }
+            }   
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
@@ -53,12 +66,6 @@ namespace Skyjoo.ReOrderView
 
             serverActivity.PlayerList = itemList;
             NotifyItemMoved(fromPosition, toPosition);
-            return true;
-        }
-
-        public bool OnLongClick(View v)
-        {
-            serverActivity.OnStartDrag(_reOrderViewHolder);
             return true;
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Skyjoo.GameLogic.Bots;
+using System;
 using System.Collections.Generic;
 
 namespace Skyjoo.GameLogic
@@ -15,6 +16,9 @@ namespace Skyjoo.GameLogic
         public ReverseSkyjoCardStack ReverseSkyjoCardStack;
         public int CurrentActivePlayerIndex;
 
+        public int FieldWidth;
+        public int FieldHeight;
+        private bool isHostGame;
         private int roundStarter;
         private bool ignoreRules;
         private FieldUpdateType lastMove;
@@ -24,7 +28,7 @@ namespace Skyjoo.GameLogic
         private GameActivity activity;
         private SkyjoBoardGridAdapter cardAdapter;
 
-        public SkyjoBoard(GameActivity activity, SkyjoGameInfo skyjoGameInfo, int ownPlayerIndex)
+        public SkyjoBoard(GameActivity activity, int ownPlayerIndex)
         {
             ignoreRules = false;
 #if DEBUG
@@ -32,14 +36,24 @@ namespace Skyjoo.GameLogic
 #endif
             OwnPlayerIndex = ownPlayerIndex;
             this.activity = activity;
-            initGame(skyjoGameInfo.StackSeed, skyjoGameInfo.Players);
+            isHostGame = Dependency.DependencyClass.Server != null;
+            //TODO Try to resend message when failed (multi thread sending)
+            //TODO reset connection on back (disconnect, clear dependency, destroy activities)
+            //TODO new skinpack original card backs
+            //TODO add version number on main screen
+            //TODO better bot add menu
+            //TODO hard bot
+            //TODO remove from playerList
         }
 
         /// <summary>
-        /// Initializes the game
+        /// Initializes the game.
         /// </summary>
-        private void initGame(int stackSeed, Dictionary<string, string> players)
+        /// <param name="skyjoGameInfo">The SkyjoGameInfo provided by the host</param>
+        public void InitGame(SkyjoGameInfo skyjoGameInfo)
         {
+            FieldWidth = skyjoGameInfo.FieldWidth;
+            FieldHeight = skyjoGameInfo.FieldHeight;
             gameEnded = false;
             gameStarted = false;
             lastMove = FieldUpdateType.RevealOnField;
@@ -47,29 +61,58 @@ namespace Skyjoo.GameLogic
             CurrentActivePlayerIndex = 0;
             CurrentDisplayedPlayerIndex = -1;
             roundStarter = 0;
+
             ReverseSkyjoCardStack = new ReverseSkyjoCardStack();
-            SkyjoCardStack = SkyjoCardStack.GetCardStack(stackSeed);
-            createPlayers(players);
+            SkyjoCardStack = SkyjoCardStack.GetCardStack(skyjoGameInfo.StackSeed);
+
+            createPlayers(skyjoGameInfo.Players, skyjoGameInfo.BotSeed);
+
             updateCurrentPlayerDisplay(CurrentActivePlayerIndex);
-            initUI();
-            showToast(activity.Resources.GetString(Resource.String.game_start));
+            initUI(FieldWidth);
+            ShowToast(activity.Resources.GetString(Resource.String.game_start));
+
+            foreach (var player in Players)
+            {
+                if (player.IsBot)
+                    player.Bot.RevealTwoCards(this);
+            }
         }
 
         /// <summary>
         /// Creates the players
         /// </summary>
         /// <param name="players">The players (ip, name)</param>
-        private void createPlayers(Dictionary<string, string> players)
+        private void createPlayers(Dictionary<string, string> players, int botSeed)
         {
+            var random = new Random(botSeed);
             Players = new SkyjoPlayer[players.Count];
             int n = 0;
             foreach (var pair in players)
             {
-                Players[n] = new SkyjoPlayer(pair.Key, pair.Value);
-                Players[n].PlayingField.FieldCards = new SkyjoCard[12];
-                for (int i = 0; i < 12; i++)
+                Players[n] = new SkyjoPlayer(pair.Key, pair.Value, FieldWidth, FieldHeight);
+                int fieldSize = FieldWidth * FieldHeight;
+                Players[n].PlayingField.FieldCards = new SkyjoCard[fieldSize];
+                for (int i = 0; i < fieldSize; i++)
                 {
                     Players[n].PlayingField.FieldCards[i] = SkyjoCardStack.GetTopCard();
+                }
+                if (pair.Key.StartsWith("Bot"))
+                {
+                    Players[n].Name = BaseBot.GetRandomBotName(random.Next());
+                    Players[n].IsBot = true;
+
+                    if (pair.Key.StartsWith(BaseBot.GetBotString(BotDifficulty.EASY)))
+                    {
+                        Players[n].Bot = new EasyBot(pair.Key, n, random.Next());
+                    }
+                    else if (pair.Key.StartsWith(BaseBot.GetBotString(BotDifficulty.MEDIUM)))
+                    {
+                        Players[n].Bot = new MediumBot(pair.Key, n, random.Next());
+                    }
+                    else if (pair.Key.StartsWith(BaseBot.GetBotString(BotDifficulty.HARD)))
+                    {
+                        Players[n].Bot = new HardBot(pair.Key, n, random.Next());
+                    }
                 }
                 n++;
             }
@@ -90,29 +133,35 @@ namespace Skyjoo.GameLogic
                 roundStarter++;
                 if (roundStarter == Players.Length) roundStarter = 0;
             }
-            while (!Players[roundStarter].Active);
+            while (!Players[roundStarter].IsActive);
             CurrentActivePlayerIndex = roundStarter;
             SkyjoCardStack = SkyjoCardStack.GetCardStack(stackSeed);
             ReverseSkyjoCardStack.Clear();
+            int fieldSize = FieldWidth * FieldHeight;
             foreach (SkyjoPlayer player in Players)
             {
                 player.InitRevealedFields = 2;
                 player.PlayingField.CurrentCard = new SkyjoCard(SkyjoCardNumber.Placeholder, true);
-                player.PlayingField.FieldCards = new SkyjoCard[12];
-                for (int i = 0; i < 12; i++)
+                player.PlayingField.FieldCards = new SkyjoCard[fieldSize];
+                for (int i = 0; i < fieldSize; i++)
                 {
                     player.PlayingField.FieldCards[i] = SkyjoCardStack.GetTopCard();
                 }
             }
 
-            initUI();
-            showToast(activity.Resources.GetString(Resource.String.game_start));
+            initUI(FieldWidth);
+            ShowToast(activity.Resources.GetString(Resource.String.game_start));
+            foreach (var player in Players)
+            {
+                if (player.IsBot)
+                    player.Bot.RevealTwoCards(this);
+            }
         }
 
         /// <summary>
         /// Move to next Player
         /// </summary>
-        private void nextPlayer()
+        public void NextPlayer()
         {
             if (Players.Length == 1)
             {
@@ -125,16 +174,20 @@ namespace Skyjoo.GameLogic
 
             do
             {
-                CurrentActivePlayerIndex++;
-                if (CurrentActivePlayerIndex == Players.Length) CurrentActivePlayerIndex = 0;
+                CurrentActivePlayerIndex = (CurrentActivePlayerIndex + 1) % Players.Length;
             }
-            while (!Players[CurrentActivePlayerIndex].Active);
+            while (!Players[CurrentActivePlayerIndex].IsActive);
             updateCurrentPlayerDisplay(CurrentActivePlayerIndex);
 
             if (lastRoundStarter == CurrentActivePlayerIndex)
                 endGame();
             else if (CurrentActivePlayerIndex == OwnPlayerIndex)
-                showToast(activity.Resources.GetString(Resource.String.game_your_turn));
+                ShowToast(activity.Resources.GetString(Resource.String.game_your_turn));
+
+            if (isHostGame && Players[CurrentActivePlayerIndex].IsBot)
+            {
+                Players[CurrentActivePlayerIndex].Bot.PlayMove(this);
+            }
         }
 
         /// <summary>
@@ -142,12 +195,11 @@ namespace Skyjoo.GameLogic
         /// </summary>
         /// <param name="type">What type of move</param>
         /// <param name="fieldIndex">The index of a fieldCard if needed</param>
-        private void validateMove(FieldUpdateType type, int fieldIndex = -1)
+        public void ValidateMove(int playerIndex, FieldUpdateType type, int fieldIndex = -1)
         {
             if (ignoreRules)
             {
-                FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(OwnPlayerIndex, fieldIndex, type));
-                lastMove = type;
+                FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(playerIndex, fieldIndex, type));
                 return;
             }
 
@@ -156,24 +208,24 @@ namespace Skyjoo.GameLogic
 
             if (!hasGameStarted())
             {
-                if (type == FieldUpdateType.RevealOnField && Players[OwnPlayerIndex].InitRevealedFields > 0)
+                if (type == FieldUpdateType.RevealOnField && Players[playerIndex].InitRevealedFields > 0)
                 {
-                    FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(OwnPlayerIndex, fieldIndex, type));
+                    FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(playerIndex, fieldIndex, type));
                 }
                 return;
             }
 
-            if (CurrentActivePlayerIndex != OwnPlayerIndex) return;
+            if (CurrentActivePlayerIndex != playerIndex) return;
 
             if ((SkyjoMoveRules.IsEndingMove(lastMove) && SkyjoMoveRules.IsStartingMove(type)) || SkyjoMoveRules.IsValidNextNove(type, lastMove))
             {
-                FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(OwnPlayerIndex, fieldIndex, type));
+                FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(playerIndex, fieldIndex, type));
                 lastMove = type;
             }
 
             if (SkyjoCardStack.Count == 0)
             {
-                FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(OwnPlayerIndex, -1, FieldUpdateType.ShuffleStack));
+                FieldUpdated?.Invoke(this, new FieldUpdateEventArgs(playerIndex, -1, FieldUpdateType.ShuffleStack));
             }
         }
 
@@ -182,22 +234,7 @@ namespace Skyjoo.GameLogic
         /// </summary>
         private void clearRows(int playerIndex, bool ignoreVisibility = false)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                if (ignoreVisibility || Players[playerIndex].PlayingField.FieldCards[i].IsVisible &&
-                    Players[playerIndex].PlayingField.FieldCards[i + 4].IsVisible &&
-                    Players[playerIndex].PlayingField.FieldCards[i + 8].IsVisible)
-                    if (Players[playerIndex].PlayingField.FieldCards[i].Number ==
-                        Players[playerIndex].PlayingField.FieldCards[i + 4].Number &&
-                        Players[playerIndex].PlayingField.FieldCards[i].Number ==
-                        Players[playerIndex].PlayingField.FieldCards[i + 8].Number &&
-                        !Players[playerIndex].PlayingField.FieldCards[i].IsPlaceholder)
-                    {
-                        Players[playerIndex].PlayingField.FieldCards[i] = new SkyjoCard(SkyjoCardNumber.Placeholder, true);
-                        Players[playerIndex].PlayingField.FieldCards[i + 4] = new SkyjoCard(SkyjoCardNumber.Placeholder, true);
-                        Players[playerIndex].PlayingField.FieldCards[i + 8] = new SkyjoCard(SkyjoCardNumber.Placeholder, true);
-                    }
-            }
+            Players[playerIndex].PlayingField.ClearRows();
         }
 
         /// <summary>
@@ -211,7 +248,7 @@ namespace Skyjoo.GameLogic
                 if (!card.IsVisible) return;
             }
             lastRoundStarter = CurrentActivePlayerIndex;
-            showToast(activity.Resources.GetString(Resource.String.game_last_round_start));
+            ShowToast(activity.Resources.GetString(Resource.String.game_last_round_start));
         }
 
         /// <summary>
@@ -228,7 +265,7 @@ namespace Skyjoo.GameLogic
                 }
                 clearRows(i, true);
             }
-            showToast(activity.Resources.GetString(Resource.String.game_end));
+            ShowToast(activity.Resources.GetString(Resource.String.game_end));
         }
 
         /// <summary>

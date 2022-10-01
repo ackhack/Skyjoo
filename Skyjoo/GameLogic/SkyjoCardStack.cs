@@ -20,6 +20,16 @@ namespace Skyjoo.GameLogic
             cards.RemoveAt(0);
             return card;
         }
+        
+        /// <summary>
+        /// Returns the Number of the Top Card
+        /// </summary>
+        /// <returns>The top card number or placeholder if empty</returns>
+        virtual public SkyjoCardNumber PeekTopCard()
+        {
+            if (cards.Count == 0) return SkyjoCardNumber.Placeholder;
+            return cards[0].Number;
+        }
 
         /// <summary>
         /// Returns the image id of the top card or the placeholderId if empty

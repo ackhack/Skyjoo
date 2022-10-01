@@ -9,9 +9,13 @@ namespace Skyjoo.GameLogic
         {
             SkyjoGameInfo info = new SkyjoGameInfo();
 
+            info.FieldWidth = 4;
+            info.FieldHeight = 3;
+
             info.Players = playerLogins;
 
             info.StackSeed = new Random().Next();
+            info.BotSeed = new Random().Next();
 
             return info;
         }

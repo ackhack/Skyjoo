@@ -80,6 +80,11 @@
     <Compile Include="Activities\GameActivity.cs" />
     <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Activities\ServerActivity.cs" />
+    <Compile Include="GameLogic\Bots\BaseBot.BaseMoves.cs" />
+    <Compile Include="GameLogic\Bots\BaseBot.cs" />
+    <Compile Include="GameLogic\Bots\EasyBot.cs" />
+    <Compile Include="GameLogic\Bots\HardBot.cs" />
+    <Compile Include="GameLogic\Bots\MediumBot.cs" />
     <Compile Include="ReOrderView\IOnStartDragListener.cs" />
     <Compile Include="ReOrderView\ITemTouchHelperAdapter.cs" />
     <Compile Include="ReOrderView\ReOrderAdapter.cs" />
@@ -98,7 +103,6 @@
     <Compile Include="GameLogic\SkyjoBoard.cs" />
     <Compile Include="GameLogic\SkyjoCardStack.cs" />
     <Compile Include="GameLogic\SkyjoClientMessage.cs" />
-    <Compile Include="GameLogic\SkyjoDisplayField.cs" />
     <Compile Include="GameLogic\SkyjoGameInfo.cs" />
     <Compile Include="GameLogic\SkyjoGameInfoCreater.cs" />
     <Compile Include="GameLogic\SkyjoHostMessage.cs" />
@@ -133,15 +137,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>20.2.0.45</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>20.2.0.45</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.2.0.5" />
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.0.0.1" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.AndroidX.AppCompat" Version="1.5.0" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.6.1.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\client_layout.axml" />

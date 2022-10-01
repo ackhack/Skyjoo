@@ -34,4 +34,8 @@
 	<string name="waiting_for_host">"Waiting for host to start the game"</string>
 	<string name="current_player_display">"Current Player: {0}"</string>
 	<string name="iconpack_input">"Iconpack"</string>
+	<string name="add_bot">"Add Bot (BETA)"</string>
+	<string name="bot_easy">"Easy Bot"</string>
+	<string name="bot_medium">"Medium Bot"</string>
+	<string name="bot_hard">"Hard Bot"</string>
 </resources>

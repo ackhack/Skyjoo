@@ -12,7 +12,7 @@ namespace Skyjoo.GameLogic
         /// <summary>
         /// Inits the UI
         /// </summary>
-        private void initUI()
+        private void initUI(int fieldWidth)
         {
             activity.RunOnUiThread(() =>
             {
@@ -52,6 +52,7 @@ namespace Skyjoo.GameLogic
                 currCardView.Click += onCurrentCardClick;
 
                 var gridView = activity.FindViewById<GridView>(Resource.Id.view_cards);
+                gridView.NumColumns = fieldWidth;
                 cardAdapter = new SkyjoBoardGridAdapter(activity, this);
                 gridView.Adapter = cardAdapter;
                 gridView.ItemClick += onFieldCardClick;
@@ -172,7 +173,7 @@ namespace Skyjoo.GameLogic
         /// Shows a message to the user
         /// </summary>
         /// <param name="message">The message</param>
-        private void showToast(string message)
+        public void ShowToast(string message)
         {
             writeToChangelog(message);
             activity.RunOnUiThread(() =>

@@ -24,7 +24,7 @@ namespace Skyjoo.GameLogic
             if (CurrentDisplayedPlayerIndex != OwnPlayerIndex) return;
             if (SkyjoCardStack.Count == 0) return;
             if (Players[CurrentDisplayedPlayerIndex].PlayingField.CurrentCard.IsPlaceholder)
-                validateMove(FieldUpdateType.StackToCurrent);
+                ValidateMove(OwnPlayerIndex,FieldUpdateType.StackToCurrent);
         }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace Skyjoo.GameLogic
             {
                 if (ReverseSkyjoCardStack.GetTopImageId() == SkyjoCard.GetPlaceholderImageId()) return;
                 if (ReverseSkyjoCardStack.Count == 0) return;
-                validateMove(FieldUpdateType.ReversedStackToCurrent);
+                ValidateMove(OwnPlayerIndex,FieldUpdateType.ReversedStackToCurrent);
             }
             else
-                validateMove(FieldUpdateType.CurrentToReverseStack);
+                ValidateMove(OwnPlayerIndex,FieldUpdateType.CurrentToReverseStack);
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace Skyjoo.GameLogic
             if (CurrentDisplayedPlayerIndex != OwnPlayerIndex) return;
             if (Players[CurrentDisplayedPlayerIndex].PlayingField.FieldCards[e.Position].IsPlaceholder) return;
             if (!Players[CurrentDisplayedPlayerIndex].PlayingField.CurrentCard.IsPlaceholder)
-                validateMove(FieldUpdateType.CurrentToField, e.Position);
+                ValidateMove(OwnPlayerIndex,FieldUpdateType.CurrentToField, e.Position);
             else
             {
                 if (!Players[CurrentDisplayedPlayerIndex].PlayingField.FieldCards[e.Position].IsVisible)
-                    validateMove(FieldUpdateType.RevealOnField, e.Position);
+                    ValidateMove(OwnPlayerIndex,FieldUpdateType.RevealOnField, e.Position);
             }
         }
 

@@ -68,9 +68,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"/>
     </LinearLayout>
-
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnClient"
+        android:text="@string/add_bot"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerPlayers"/>
+
+
 </LinearLayout>

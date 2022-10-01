@@ -26,14 +26,14 @@ namespace Skyjoo.ReOrderView
             }
 
             // Notify the adapter of the move
-            _mAdapter.OnItemMove(viewHolder.AdapterPosition, target.AdapterPosition);
+            _mAdapter.OnItemMove(viewHolder.AbsoluteAdapterPosition, target.AbsoluteAdapterPosition);
             return true;
         }
 
         public override void OnSwiped(RecyclerView.ViewHolder viewHolder, int direction)
         {
             // Notify the adapter of the dismissal
-            _mAdapter.OnItemDismiss(viewHolder.AdapterPosition);
+            _mAdapter.OnItemDismiss(viewHolder.AbsoluteAdapterPosition);
         }
     }
 }

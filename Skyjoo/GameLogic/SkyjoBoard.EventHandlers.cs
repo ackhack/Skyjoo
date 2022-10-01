@@ -17,7 +17,21 @@ namespace Skyjoo.GameLogic
                 case FieldUpdateType.RevealOnField:
                     Players[playerIndex].PlayingField.FieldCards[fieldIndex].IsVisible = true;
                     if (!hasGameStarted())
+                    {
                         Players[playerIndex].InitRevealedFields--;
+                        updateChangelog(type, playerIndex);
+                        updateUI();
+                        if (hasGameStarted())
+                        {
+                            if (CurrentActivePlayerIndex == OwnPlayerIndex)
+                                ShowToast(activity.Resources.GetString(Resource.String.game_your_turn));
+                            else if (isHostGame && Players[CurrentActivePlayerIndex].IsBot)
+                            {
+                                Players[CurrentActivePlayerIndex].Bot.PlayMove(this);
+                            }
+                        }
+                        return;
+                    }
                     break;
 
                 case FieldUpdateType.CurrentToField:
@@ -46,13 +60,16 @@ namespace Skyjoo.GameLogic
                     break;
             }
 
+            if (playerIndex != OwnPlayerIndex)
+                lastMove = type;
+
             updateChangelog(type, playerIndex);
 
             clearRows(CurrentActivePlayerIndex);
             if (SkyjoMoveRules.IsEndingMove(type))
             {
                 checkLastRoundStart();
-                nextPlayer();
+                NextPlayer();
             }
 
             updateUI();
@@ -92,7 +109,7 @@ namespace Skyjoo.GameLogic
             {
                 if (player.Ip == ip)
                 {
-                    player.Active = false;
+                    player.IsActive = false;
                     return;
                 }
             }
