@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -97,18 +98,6 @@ namespace NetworkCommunication.Core
         /// <param name="obj">EndPoint adderess.</param>
         private void ConnectionWork(object obj)
         {
-            void CopyTo(Stream src, Stream dest)
-            {
-                byte[] bytes = new byte[4096];
-
-                int cnt;
-
-                while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
-                {
-                    dest.Write(bytes, 0, cnt);
-                }
-            }
-
             try
             {
                 var endPoint = (IPEndPoint)obj;
@@ -131,16 +120,7 @@ namespace NetworkCommunication.Core
                     {
                         break;
                     }
-                    using (var msi = new MemoryStream(buffer))
-                    using (var mso = new MemoryStream())
-                    {
-                        using (var gs = new GZipStream(msi, CompressionMode.Decompress))
-                        {
-                            CopyTo(gs, mso);
-                        }
-
-                        OnReceivedMessage(mso.ToArray());
-                    }
+                    OnReceivedMessage(buffer.Take(count).ToArray());
                 }
             }
             catch (Exception ex)

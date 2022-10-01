@@ -200,7 +200,7 @@ namespace NetworkCommunication.Core
             {
                 while (state == SocketServerState.Running)
                 {
-                    if (host.Connection.Connected)
+                     if (host.Connection.Connected)
                     {
                         var buffer = new byte[1448];
                         var count = host.Connection.Receive(buffer);
@@ -313,30 +313,7 @@ namespace NetworkCommunication.Core
 
         public void SendMessageToClients(string message)
         {
-            void CopyTo(Stream src, Stream dest)
-            {
-                byte[] bytes = new byte[4096];
-
-                int cnt;
-
-                while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
-                {
-                    dest.Write(bytes, 0, cnt);
-                }
-            }
-
-            var bytes = Encoding.UTF8.GetBytes(message);
-
-            using (var msi = new MemoryStream(bytes))
-            using (var mso = new MemoryStream())
-            {
-                using (var gs = new GZipStream(mso, CompressionMode.Compress))
-                {
-                    CopyTo(msi, gs);
-                }
-
-                messageQueue.Enqueue(mso.ToArray());
-            }
+            messageQueue.Enqueue(Encoding.UTF8.GetBytes(message));
         }
 
         /// <summary>
