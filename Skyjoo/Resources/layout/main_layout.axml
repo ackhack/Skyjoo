@@ -44,4 +44,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/spinner_iconpack"
         android:layout_marginTop="16dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/version_header"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/mainVersion"/>
 </LinearLayout>

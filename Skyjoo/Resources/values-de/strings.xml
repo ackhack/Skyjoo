@@ -38,4 +38,5 @@
 	<string name="bot_easy">"Einfacher Bot"</string>
 	<string name="bot_medium">"Normaler Bot"</string>
 	<string name="bot_hard">"Schwerer Bot"</string>
+	<string name="version_header">"Version"</string>
 </resources>

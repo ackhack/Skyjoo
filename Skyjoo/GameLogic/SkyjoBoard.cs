@@ -40,7 +40,6 @@ namespace Skyjoo.GameLogic
             //TODO Try to resend message when failed (multi thread sending)
             //TODO reset connection on back (disconnect, clear dependency, destroy activities)
             //TODO new skinpack original card backs
-            //TODO add version number on main screen
             //TODO better bot add menu
             //TODO hard bot
             //TODO remove from playerList
