@@ -84,7 +84,7 @@ namespace Skyjoo.GameLogic
             activity.RunOnUiThread(() =>
             {
                 activity.SetContentView(Resource.Layout.game_layout);
-                new Thread(() => reloadGame(stackSeed)).Start();
+                reloadGame(stackSeed);
             });
         }
 

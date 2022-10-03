@@ -69,15 +69,15 @@ namespace Skyjoo.GameLogic
             activity.RunOnUiThread(() =>
             {
                 var rStack = activity.FindViewById<ImageView>(Resource.Id.img_reverseStackCard);
-                rStack.SetImageResource(ReverseSkyjoCardStack.GetTopImageId());
-                rStack.Invalidate();
+                rStack?.SetImageResource(ReverseSkyjoCardStack.GetTopImageId());
+                rStack?.Invalidate();
                 var Stack = activity.FindViewById<ImageView>(Resource.Id.img_stackCard);
-                Stack.SetImageResource(SkyjoCardStack.GetTopImageId());
-                Stack.Invalidate();
+                Stack?.SetImageResource(SkyjoCardStack.GetTopImageId());
+                Stack?.Invalidate();
                 var currCard = activity.FindViewById<ImageView>(Resource.Id.img_currentCard);
-                currCard.SetImageResource(DisplayedField.CurrentCard.GetImageId());
-                currCard.Invalidate();
-                cardAdapter.NotifyDataSetChanged();
+                currCard?.SetImageResource(DisplayedField.CurrentCard.GetImageId());
+                currCard?.Invalidate();
+                cardAdapter?.NotifyDataSetChanged();
             });
         }
 
