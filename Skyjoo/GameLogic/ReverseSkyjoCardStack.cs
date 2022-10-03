@@ -15,6 +15,12 @@ namespace Skyjoo.GameLogic
             return list;
         }
 
+        public override SkyjoCardNumber PeekTopCard()
+        {
+            if (cards.Count == 0) return SkyjoCardNumber.Placeholder;
+            return cards[cards.Count - 1].Number;
+        }
+
         public override SkyjoCard GetTopCard()
         {
             if (cards.Count == 0) return null;
