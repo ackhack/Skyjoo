@@ -97,6 +97,21 @@ namespace Skyjoo.GameLogic
                     return 10;
             }
         }
+
+        public override int GetHashCode()
+        {
+            return ((int)Number << 1) + (IsVisible ? 1 : 0);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != GetType()) return false;
+
+            SkyjoCard othercard = (SkyjoCard)obj;
+
+            if (!IsVisible || !othercard.IsVisible) return false;
+            return Number == othercard.Number;
+        }
     }
 
     public enum SkyjoCardNumber

@@ -1,38 +1,43 @@
 ﻿using Skyjoo.GameLogic.Bots;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Skyjoo.GameLogic
 {
     public partial class SkyjoBoard
     {
+        //Game Vars
         public SkyjoPlayer[] Players;
+        public SkyjoCardStack SkyjoCardStack;
+        public ReverseSkyjoCardStack ReverseSkyjoCardStack;
+        public int CurrentActivePlayerIndex;
+        public int FieldWidth;
+        public int FieldHeight;
+        private int roundStarter;
+        private bool gameEnded;
+        private bool gameStarted;
+        private int lastRoundStarter;
+
+
         public SkyjoPlayerField DisplayedField;
         public int CurrentDisplayedPlayerIndex;
         public int OwnPlayerIndex;
         public event EventHandler<FieldUpdateEventArgs> FieldUpdated;
-
-        public SkyjoCardStack SkyjoCardStack;
-        public ReverseSkyjoCardStack ReverseSkyjoCardStack;
-        public int CurrentActivePlayerIndex;
-
-        public int FieldWidth;
-        public int FieldHeight;
         private bool isHostGame;
-        private int roundStarter;
-        private bool ignoreRules;
         private FieldUpdateType lastMove;
-        private bool gameEnded;
-        private bool gameStarted;
-        private int lastRoundStarter;
         private GameActivity activity;
         private SkyjoBoardGridAdapter cardAdapter;
 
+        //Dev Vars
+        private bool ignoreRules = false;
+        private bool debugBots = false;
+
         public SkyjoBoard(GameActivity activity, int ownPlayerIndex)
         {
-            ignoreRules = false;
 #if DEBUG
             //ignoreRules = true;
+            debugBots = true;
 #endif
             OwnPlayerIndex = ownPlayerIndex;
             this.activity = activity;
@@ -181,10 +186,25 @@ namespace Skyjoo.GameLogic
             if (lastRoundStarter == CurrentActivePlayerIndex)
                 endGame();
             else if (CurrentActivePlayerIndex == OwnPlayerIndex)
-                ShowToast(activity.Resources.GetString(Resource.String.game_your_turn));
+            {
+                if (!debugBots)
+                {
+                    ShowToast(activity.Resources.GetString(Resource.String.game_your_turn));
+                }
+#if DEBUG
+                if (debugBots && lastRoundStarter < 0)
+                {
+                    CurrentActivePlayerIndex = (CurrentActivePlayerIndex + 1) % Players.Length;
+                }
+#endif
+            }
 
             if (isHostGame && Players[CurrentActivePlayerIndex].IsBot)
             {
+                updateUI();
+#if DEBUG
+                Thread.Sleep(1000);
+#endif
                 Players[CurrentActivePlayerIndex].Bot.PlayMove(this);
             }
         }

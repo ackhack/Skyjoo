@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Skyjoo.GameLogic.Bots
 {
@@ -8,7 +9,15 @@ namespace Skyjoo.GameLogic.Bots
         public int PlayerIndex;
         public BotDifficulty Difficulty;
         protected Random random;
+        protected bool verbose = false;
         private static string[] names = { "Chrissi", "Lucas", "Dave", "Tobi", "Domi", "Michi", "Heider", "Steger", "Nadja", "Sarah", "Juliane", "Rebecca" };
+
+        public BaseBot()
+        {
+#if  DEBUG
+            verbose = true;
+#endif
+        }
 
         public static string GetRandomBotName(int random)
         {
@@ -43,6 +52,21 @@ namespace Skyjoo.GameLogic.Bots
                 default:
                     return "BotDead";
             }
+        }
+
+        [DebuggerStepThrough]
+        protected void logInfo(string move)
+        {
+            if (!verbose)
+                return;
+
+            System.Diagnostics.Debug.WriteLine(GetType().Name + ": " + move);
+        }
+
+        protected void executeMove(SkyjoBoard board, FieldUpdateType type, int fieldIndex = -1)
+        {
+            logInfo("Playing " + type + (fieldIndex > -1 ? " to field " + fieldIndex : ""));
+            board.ValidateMove(PlayerIndex, type, fieldIndex);
         }
 
     }

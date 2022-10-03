@@ -1,5 +1,5 @@
-﻿using Android.Bluetooth;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Skyjoo.GameLogic.Bots
@@ -12,10 +12,11 @@ namespace Skyjoo.GameLogic.Bots
         {
             int fieldSize = board.FieldWidth * board.FieldHeight;
             int field1 = random.Next() % fieldSize;
-            board.ValidateMove(PlayerIndex, FieldUpdateType.RevealOnField, field1);
-            board.ValidateMove(PlayerIndex, FieldUpdateType.RevealOnField, (field1 + 1 + (random.Next() % (fieldSize - 2))) % fieldSize);
+            executeMove(board, FieldUpdateType.RevealOnField, field1);
+            executeMove(board, FieldUpdateType.RevealOnField, (field1 + 1 + (random.Next() % (fieldSize - 2))) % fieldSize);
         }
 
+        [DebuggerStepThrough]
         protected List<int> GetAllUnreaveledFields(SkyjoBoard board)
         {
             List<int> fields = new List<int>();
@@ -28,6 +29,7 @@ namespace Skyjoo.GameLogic.Bots
             return fields;
         }
 
+        [DebuggerStepThrough]
         protected List<List<SkyjoCard>> GetRows(SkyjoBoard board)
         {
 
@@ -44,6 +46,7 @@ namespace Skyjoo.GameLogic.Bots
             return rows;
         }
 
+        [DebuggerStepThrough]
         protected int GetNumberOfInvisiblesInRows(List<List<SkyjoCard>> rows)
         {
             int numberInvisible = 0;
@@ -54,6 +57,7 @@ namespace Skyjoo.GameLogic.Bots
             return numberInvisible;
         }
 
+        [DebuggerStepThrough]
         protected int GetNumberOfInvisiblesInRow(List<SkyjoCard> row)
         {
             int numberInvisible = 0;
@@ -67,7 +71,8 @@ namespace Skyjoo.GameLogic.Bots
 
         protected bool HasLowestFieldValue(SkyjoBoard board, SkyjoCard lastCard)
         {
-            int ownValue = GetFieldValueLastCard(board, lastCard);
+            logInfo("Checking for lowest field value");
+            int ownValue = GetFieldValueLastCard(GetRows(board), lastCard);
             if (ownValue == -1)
                 return false;
 
@@ -81,60 +86,49 @@ namespace Skyjoo.GameLogic.Bots
             return true;
         }
 
-        protected int GetFieldValueLastCard(SkyjoBoard board, SkyjoCard lastCard)
+        protected int GetFieldValueLastCard(List<List<SkyjoCard>> rows, SkyjoCard lastCard)
         {
-            var cards = board.Players[PlayerIndex].PlayingField.FieldCards;
-            var invisibleIndex = -1;
+            bool firstInvisible = false;
             var value = -1;
-            for (int n = 0; n < cards.Length; n++)
+
+            for (int r = 0; r < rows.Count; r++)
             {
-                if (!cards[n].IsVisible)
+                for (int c = 0; c < rows[r].Count; c++)
                 {
-                    if (invisibleIndex > -1)
-                        return -1;
-                    invisibleIndex = n;
-                    cards[n] = lastCard;
-                    //clear rows
-                    for (int i = 0; i < board.FieldWidth; i++)
+                    if (!rows[r][c].IsVisible)
                     {
-                        SkyjoCardNumber firstCard = cards[i].Number;
-                        if (firstCard == SkyjoCardNumber.Placeholder)
-                            continue;
-                        bool canClear = true;
+                        // if multiple invisible, abort
+                        if (firstInvisible)
+                            return -1;
 
-                        for (int j = 0; j < board.FieldHeight; j++)
-                        {
-                            var currIndex = i + j * board.FieldWidth;
-                            if (!cards[currIndex].IsVisible)
-                            {
-                                canClear = false;
-                                break;
-                            }
-                            if (j > 0)
-                            {
-                                if (firstCard != cards[currIndex].Number)
-                                {
-                                    canClear = false;
-                                    break;
-                                }
-                            }
-                        }
+                        // insert card
+                        firstInvisible = true;
+                        rows[r][c] = lastCard;
 
-                        if (canClear)
+                        // check if row can be cleared
+                        if (rows[r].Distinct().Count() == 1)
                         {
-                            for (int j = 0; j < board.FieldHeight; j++)
+                            for (int i = 0; i < rows[r].Count; i++)
                             {
-                                var currIndex = i + j * board.FieldWidth;
-                                cards[currIndex] = new SkyjoCard(SkyjoCardNumber.Placeholder, true);
+                                rows[r][i] = new SkyjoCard(SkyjoCardNumber.Placeholder, true);
                             }
                         }
                     }
-                    value = GetFieldValue(cards);
+                }
+            }
+
+            // calculate value
+            for (int r = 0; r < rows.Count; r++)
+            {
+                for (int c = 0; c < rows[r].Count; c++)
+                {
+                    value += rows[r][c].GetValue();
                 }
             }
             return value;
         }
 
+        [DebuggerStepThrough]
         protected int GetFieldValue(SkyjoCard[] cards)
         {
             int value = 0;
@@ -152,6 +146,7 @@ namespace Skyjoo.GameLogic.Bots
             return value;
         }
 
+        [DebuggerStepThrough]
         protected int GetIndexOfHighestCardInRows(List<List<SkyjoCard>> rows)
         {
             var value = SkyjoCardNumber.Placeholder;
@@ -172,6 +167,7 @@ namespace Skyjoo.GameLogic.Bots
             return index;
         }
 
+        [DebuggerStepThrough]
         protected int GetIndexOfHighestCardInRow(List<SkyjoCard> row, SkyjoCardNumber ignore = SkyjoCardNumber.Placeholder)
         {
             var value = SkyjoCardNumber.Placeholder;
@@ -195,17 +191,20 @@ namespace Skyjoo.GameLogic.Bots
             return fieldIndex * rowCount + rowIndex;
         }
 
+        [DebuggerStepThrough]
         protected int GetRandomRevealField(SkyjoBoard board)
         {
             var fields = GetAllUnreaveledFields(board);
             return fields[random.Next() % fields.Count];
         }
 
+        [DebuggerStepThrough]
         protected bool IsRowCollecting(List<SkyjoCard> row)
         {
             return row.Count != row.Distinct().Count();
         }
 
+        [DebuggerStepThrough]
         protected bool IsRowLowRow(List<SkyjoCard> row)
         {
             return row.Any(x => x.IsVisible && x.Number < SkyjoCardNumber.Plus5 && !x.IsPlaceholder);

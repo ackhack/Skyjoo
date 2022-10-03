@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Skyjoo.GameLogic.Bots
 {
@@ -29,21 +30,26 @@ namespace Skyjoo.GameLogic.Bots
 
         protected void ReverseStackMove(SkyjoBoard board)
         {
-            board.ValidateMove(PlayerIndex, FieldUpdateType.ReversedStackToCurrent);
-            board.ValidateMove(PlayerIndex, FieldUpdateType.CurrentToField, random.Next() % (board.FieldWidth * board.FieldHeight));
+            logInfo("Reverse Stack Move");
+            executeMove(board, FieldUpdateType.ReversedStackToCurrent);
+            //Thread.Sleep(500);
+            executeMove(board, FieldUpdateType.CurrentToField, random.Next() % (board.FieldWidth * board.FieldHeight));
         }
 
         protected void StackMove(SkyjoBoard board)
         {
-            board.ValidateMove(PlayerIndex, FieldUpdateType.StackToCurrent);
+            logInfo("Stack Move");
+            executeMove(board, FieldUpdateType.StackToCurrent);
+            //Thread.Sleep(500);
             switch (random.Next() % 2)
             {
                 case 0:
-                    board.ValidateMove(PlayerIndex, FieldUpdateType.CurrentToField, random.Next() % (board.FieldWidth * board.FieldHeight));
+                    executeMove(board, FieldUpdateType.CurrentToField, random.Next() % (board.FieldWidth * board.FieldHeight));
                     break;
                 case 1:
-                    board.ValidateMove(PlayerIndex, FieldUpdateType.CurrentToReverseStack);
-                    board.ValidateMove(PlayerIndex, FieldUpdateType.RevealOnField, GetRandomRevealField(board));
+                    executeMove(board, FieldUpdateType.CurrentToReverseStack);
+                    //Thread.Sleep(500);
+                    executeMove(board, FieldUpdateType.RevealOnField, GetRandomRevealField(board));
                     break;
             }
         }
