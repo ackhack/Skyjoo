@@ -199,7 +199,7 @@ namespace Skyjoo.GameLogic
 #endif
             }
 
-            if (isHostGame && Players[CurrentActivePlayerIndex].IsBot)
+            if (!gameEnded && isHostGame && Players[CurrentActivePlayerIndex].IsBot)
             {
                 updateUI();
 #if DEBUG
