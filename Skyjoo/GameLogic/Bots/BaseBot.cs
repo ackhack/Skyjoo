@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System;
 using System.Diagnostics;
 
 namespace Skyjoo.GameLogic.Bots
@@ -10,7 +11,7 @@ namespace Skyjoo.GameLogic.Bots
         public BotDifficulty Difficulty;
         protected Random random;
         protected bool verbose = false;
-        private static string[] names = { "Chrissi", "Lucas", "Dave", "Tobi", "Domi", "Michi", "Heider", "Steger", "Nadja", "Sarah", "Juliane", "Rebecca" };
+        private static List<string> names = new List<string> { "Chrissi", "Lucas", "Dave", "Tobi", "Domi", "Michi", "Heider", "Steger", "Nadja", "Sarah", "Juliane", "Rebecca" };
 
         public BaseBot()
         {
@@ -21,7 +22,14 @@ namespace Skyjoo.GameLogic.Bots
 
         public static string GetRandomBotName(int random)
         {
-            return "Bot " + names[random % names.Length];
+            if (names.Count == 0)
+            {
+                return "Bot Joe";
+            }
+            int index = random % names.Count;
+            string name = names[index];
+            names.RemoveAt(index);
+            return "Bot " + name;
         }
 
         public static string GetBotString(BotDifficulty difficulty)
