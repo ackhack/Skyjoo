@@ -154,7 +154,7 @@ namespace Skyjoo.GameLogic.Bots
 
             for (int i = 0; i < rows.Count; i++)
             {
-                for (int j = 0; i < rows[i].Count; j++)
+                for (int j = 0; j < rows[i].Count; j++)
                 {
                     if (rows[i][j].Number > value && rows[i][j].IsVisible)
                     {
