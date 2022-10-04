@@ -68,10 +68,9 @@ namespace Skyjoo.GameLogic.Bots
                         if (!board.Players[PlayerIndex].PlayingField.FieldCards[i].IsVisible)
                         {
                             executeMove(board, FieldUpdateType.CurrentToField, i);
-                            break;
+                            return;
                         }
                     }
-                    return;
                 }
                 else
                 {
