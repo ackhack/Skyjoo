@@ -28,7 +28,11 @@ namespace Skyjoo
             DependencyClass.StorageHandler = new Storage.StorageHandler();
 
             var mainVersionText = FindViewById<TextView>(Resource.Id.mainVersion);
-            mainVersionText.Text = AppInfo.VersionString;
+            var text = AppInfo.VersionString;
+#if DEBUG
+            text = "DEBUG " + text;
+#endif            
+            mainVersionText.Text = text;
 
             var btnServer = FindViewById<Button>(Resource.Id.btnServer);
 
