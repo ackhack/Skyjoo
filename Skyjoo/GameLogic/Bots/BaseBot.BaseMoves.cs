@@ -89,7 +89,7 @@ namespace Skyjoo.GameLogic.Bots
         protected int GetFieldValueLastCard(List<List<SkyjoCard>> rows, SkyjoCard lastCard)
         {
             bool firstInvisible = false;
-            var value = -1;
+            var value = 0;
 
             for (int r = 0; r < rows.Count; r++)
             {
@@ -137,7 +137,7 @@ namespace Skyjoo.GameLogic.Bots
             {
                 if (!card.IsVisible)
                 {
-                    value += 6;
+                    value += 5;
                     continue;
                 }
                 value += card.GetValue();
