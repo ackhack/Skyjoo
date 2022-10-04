@@ -159,7 +159,7 @@ namespace Skyjoo.GameLogic.Bots
                     if (rows[i][j].Number > value && rows[i][j].IsVisible)
                     {
                         value = rows[i][j].Number;
-                        index = GetPlayingFieldIndexFromRow(j, rows[i].Count, i);
+                        index = GetPlayingFieldIndexFromRow(i, rows.Count, j);
                     }
                 }
             }
